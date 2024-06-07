@@ -1,7 +1,7 @@
 Package: adoptr
 Type: Package
 Title: Adaptive Optimal Two-Stage Designs
-Version: 1.0.1
+Version: 1.0.0.9000
 Authors@R: c(
         person("Kevin", "Kunzmann", 
                 role = c("aut", "cph"), 
