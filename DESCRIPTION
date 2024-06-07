@@ -73,4 +73,4 @@ Collate:
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 BugReports: https://github.com/optad/adoptr/issues
-URL: https://github.com/optad/adoptr
+URL: https://github.com/optad/adoptr, https://optad.github.io/adoptr/

@@ -5,3 +5,4 @@ inst/doc
 .Rproj.user
 tests/testthat/Rplots.pdf
 docs
+.Rhistory
