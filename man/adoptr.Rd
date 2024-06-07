@@ -63,6 +63,7 @@ Available scores are \code{\link{ConditionalPower}},
 Useful links:
 \itemize{
   \item \url{https://github.com/optad/adoptr}
+  \item \url{https://optad.github.io/adoptr/}
   \item Report bugs at \url{https://github.com/optad/adoptr/issues}
 }
 
