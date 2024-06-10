@@ -1,5 +1,3 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2616951.svg)](https://doi.org/10.5281/zenodo.2616951)
-
 [![R-CMD-check](https://github.com/optad/adoptr/actions/workflows/check-package.yaml/badge.svg)](https://github.com/optad/adoptr/actions/workflows/check-package.yaml)
 [![Codecov test coverage](https://codecov.io/gh/optad/adoptr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/optad/adoptr?branch=main)
 [![CRAN status](https://www.r-pkg.org/badges/version/adoptr)](https://cran.r-project.org/package=adoptr)
