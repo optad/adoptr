@@ -26,9 +26,9 @@ While adopt also allows implementation of custom scores via subclassing,
 for most applications a simple point-wise arithmetic on scores is
 sufficient.
 For instance, consider the case of a utility maximizing approach to
-planning where not a hard constraint on power but rather a trade-off betweem 
+planning where not a hard constraint on power but rather a trade-off between 
 power and expected sample size is required.
-The simplest utility function would just be a weightes sum of both
+The simplest utility function would just be a weighted sum of both
 power (negative weight since we minimize costs!) and expected
 sample size.
 
