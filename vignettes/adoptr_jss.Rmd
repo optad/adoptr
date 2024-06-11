@@ -1147,8 +1147,8 @@ We, therefore, decided to restrict the internal unit tests to a bare minimum wit
 a clear focus on coverage and technical integrity of the package.
 To demonstrate correctness of our results over a larger set of examples and in
 comparison with existing packages such as **rpact**, we implemented an external
-'validation report' (sources: https://github.com/kkmann/adoptr-validation-report,
-current report: https://kkmann.github.io/adoptr-validation-report/) using the
+'validation report' (sources: https://github.com/optad/adoptr-validation-report,
+current report: https://optad.github.io/adoptr-validation-report/) using the
 **bookdown** (@bookdown, @bookdown_pub) package.
 The report itself again uses CI/CD and daily rebuilds to automatically deploy
 the report corresponding to the most current CRAN-hosted version of the package.
