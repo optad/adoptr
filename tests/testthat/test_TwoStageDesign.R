@@ -7,6 +7,8 @@ number_knots <-   5L
 n2_piv       <- rep(49.6, number_knots)
 c2_piv       <- rep(1.96, number_knots)
 design       <- TwoStageDesign(n1, c1f, c1e, n2_piv, c2_piv, number_knots)
+cp           <- ConditionalPower(Normal(), PointMassPrior(.4, 1))
+pow          <- Power(Normal(), PointMassPrior(.4, 1))
 
 test_that("gaussian quadrature constructor", {
 
@@ -54,10 +56,7 @@ test_that("errors are returned correctly", {
     expect_error(
         TwoStageDesign(50, 0, 2, rep(50, 3), c(2, 2)))
 
-    cp      <- ConditionalPower(Normal(), PointMassPrior(.4, 1))
-    pow     <- Power(Normal(), PointMassPrior(.4, 1))
-    order   <- 5L
-    design  <- TwoStageDesign(50.1, 0, 2, rep(50, order), rep(2, order))
+    design  <- TwoStageDesign(50.1, 0, 2, rep(50, number_knots), rep(2, number_knots))
 
     # unconditional scores are not plotted
     expect_error(
@@ -73,7 +72,6 @@ test_that("errors are returned correctly", {
 
 test_that("plot produces correct number of columns", {
 
-    cp  <- ConditionalPower(Normal(), PointMassPrior(.3, 1))
     pic1 <- plot(design, "ConditionalPower" = cp, lwd = 1.5, col = "green")
     pic2 <- plot(design, "ConditionalPower" = cp)
     pic3 <- plot(design, cex = 2)
@@ -89,12 +87,24 @@ test_that("plot produces correct number of columns", {
 
 
 test_that("show method", {
+  
+  expect_equal(
+    paste0(capture.output(show(design)), collapse = "\n\r"),
+    "TwoStageDesign<n1=50;0.7<=x1<=2.5:n2=50> "
+  )
+  
+})
 
-    expect_equal(
-        paste0(capture.output(show(design)), collapse = "\n\r"),
-        "TwoStageDesign<n1=50;0.7<=x1<=2.5:n2=50> "
-    )
 
+test_that("print method", {
+  
+  design_summary <- summary(design, "CP"=cp, "Power"=pow)
+  
+  expect_equal(
+    length(paste0(capture.output(print(design_summary)))),
+    8
+  )
+  
 })
 
 
