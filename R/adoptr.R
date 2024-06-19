@@ -20,7 +20,7 @@
 #' or here <doi:10.18637/jss.v098.i09> .
 #'
 #' A variety of examples is presented in the validation report hosted
-#' \href{https://kkmann.github.io/adoptr-validation-report/}{here}.
+#' \href{https://optad.github.io/adoptr-validation-report/}{here}.
 #'
 #'
 #'

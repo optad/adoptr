@@ -1,5 +1,3 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2616951.svg)](https://doi.org/10.5281/zenodo.2616951)
-
 [![R-CMD-check](https://github.com/optad/adoptr/actions/workflows/check-package.yaml/badge.svg)](https://github.com/optad/adoptr/actions/workflows/check-package.yaml)
 [![Codecov test coverage](https://codecov.io/gh/optad/adoptr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/optad/adoptr?branch=main)
 [![CRAN status](https://www.r-pkg.org/badges/version/adoptr)](https://cran.r-project.org/package=adoptr)
@@ -45,5 +43,5 @@ The documentation is hosted at https://optad.github.io/adoptr.
 
 We provide an extensive validation report for **adoptr** which is implemented 
 using the **bookdown** package.
-The sources are available at https://github.com/kkmann/adoptr-validation-report and
-the last build version is hosted at https://kkmann.github.io/adoptr-validation-report.
+The sources are available at https://github.com/optad/adoptr-validation-report and
+the last build version is hosted at https://optad.github.io/adoptr-validation-report.
