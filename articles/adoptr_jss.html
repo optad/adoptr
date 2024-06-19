@@ -125,7 +125,7 @@ Kieser</h4>
 Heidelberg<br><a class="author_email" href="mailto:#"></a><a href="mailto:meinhard.kieser@imbi.uni-heidelberg.de" class="email">meinhard.kieser@imbi.uni-heidelberg.de</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2024-06-09</h4>
+            <h4 data-toc-skip class="date">2024-06-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/optad/adoptr/blob/HEAD/vignettes/adoptr_jss.Rmd" class="external-link"><code>vignettes/adoptr_jss.Rmd</code></a></small>
       <div class="d-none name"><code>adoptr_jss.Rmd</code></div>
@@ -906,16 +906,16 @@ therefore, decided to restrict the internal unit tests to a bare minimum
 with a clear focus on coverage and technical integrity of the package.
 To demonstrate correctness of our results over a larger set of examples
 and in comparison with existing packages such as <strong>rpact</strong>,
-we implemented an external ‘validation report’ (sources: <a href="https://github.com/kkmann/adoptr-validation-report" class="external-link uri">https://github.com/kkmann/adoptr-validation-report</a>,
-current report: <a href="https://kkmann.github.io/adoptr-validation-report/" class="external-link uri">https://kkmann.github.io/adoptr-validation-report/</a>)
-using the <strong>bookdown</strong> (<span class="citation">Xie
-(2019)</span>, <span class="citation">Xie (2016)</span>) package. The
-report itself again uses CI/CD and daily rebuilds to automatically
-deploy the report corresponding to the most current CRAN-hosted version
-of the package. Within the report, we still use
-<strong>testthat</strong> to conduct formal tests. In case any of these
-tests fails, the build of the report will fail, the maintainers will get
-notified, and the status indicator in the repository changes.</li>
+we implemented an external ‘validation report’ (sources: <a href="https://github.com/optad/adoptr-validation-report" class="external-link uri">https://github.com/optad/adoptr-validation-report</a>,
+current report: <a href="https://optad.github.io/adoptr-validation-report/" class="uri">https://optad.github.io/adoptr-validation-report/</a>) using
+the <strong>bookdown</strong> (<span class="citation">Xie (2019)</span>,
+<span class="citation">Xie (2016)</span>) package. The report itself
+again uses CI/CD and daily rebuilds to automatically deploy the report
+corresponding to the most current CRAN-hosted version of the package.
+Within the report, we still use <strong>testthat</strong> to conduct
+formal tests. In case any of these tests fails, the build of the report
+will fail, the maintainers will get notified, and the status indicator
+in the repository changes.</li>
 </ol>
 <p>Validating the software employed may well be as much work as
 developing it in the first place. The opaque requirements and the lack
