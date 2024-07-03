@@ -60,7 +60,7 @@ test_that("quantile is defined correctly", {
     theta <- .125
     r_A     <- theta + dist@rate_control
     sigma_A <- sqrt(r_A * (1 - r_A))
-    sigma_0 <- sqrt(2 * r_A * (1 - r_A))
+    sigma_0 <- sqrt(dist@rate_control * (1 - dist@rate_control))
     expect_equal(
         quantile(dist, probs, n, theta),
         stats::qnorm(probs, mean = sqrt(n) * theta / sigma_0, sd = sigma_A / sigma_0),
