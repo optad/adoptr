@@ -135,7 +135,7 @@ The simplest utility function would just be a weighted sum of both power
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/Scores.html">evaluate</a></span><span class="op">(</span><span class="va">objective</span>, <span class="va">design</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 59.34104</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 50.16813</span></span></code></pre></div>
 <p>Note that conditional and unconditional scores cannot be mixed in an
 expression passed to <code>composite</code>. Composite conditional
 score, however, are possible as well.</p>
@@ -146,11 +146,11 @@ score, however, are possible as well.</p>
 <span><span class="va">cs</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/composite.html">composite</a></span><span class="op">(</span><span class="op">{</span><span class="va">css</span> <span class="op">-</span> <span class="fl">50</span><span class="op">*</span><span class="va">cp</span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Scores.html">evaluate</a></span><span class="op">(</span><span class="va">cs</span>, <span class="va">design</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 200.2961 200.0316 200.0021</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 200.0014 200.0003 200.0001</span></span></code></pre></div>
 <p>Of course, composite conditional scores can also be integrated</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Scores.html">evaluate</a></span><span class="op">(</span><span class="fu"><a href="../reference/Scores.html">expected</a></span><span class="op">(</span><span class="va">cs</span>, <span class="va">datadist</span>, <span class="va">H_1</span><span class="op">)</span>, <span class="va">design</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 59.34104</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 50.16813</span></span></code></pre></div>
 <p>and (due to linearity) the result is exactly the same as before.</p>
 <div class="section level2">
 <h2 id="functional-composition">Functional Composition<a class="anchor" aria-label="anchor" href="#functional-composition"></a>
@@ -160,7 +160,7 @@ any valid numerical expression:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/composite.html">composite</a></span><span class="op">(</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">css</span><span class="op">)</span> <span class="op">-</span> <span class="fl">50</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">cp</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/Scores.html">evaluate</a></span><span class="op">(</span><span class="va">cs</span>, <span class="va">design</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -36.39139 -36.53500 -36.55095</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -36.55135 -36.55192 -36.55205</span></span></code></pre></div>
 <p>Even control flow is supported:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/composite.html">composite</a></span><span class="op">(</span><span class="op">{</span></span>
