@@ -10,6 +10,7 @@ minimize(
   initial_design,
   lower_boundary_design = get_lower_boundary_design(initial_design),
   upper_boundary_design = get_upper_boundary_design(initial_design),
+  check_constraints = TRUE,
   opts = list(algorithm = "NLOPT_LN_COBYLA", xtol_rel = 1e-05, maxeval = 10000),
   ...
 )
@@ -24,6 +25,8 @@ minimize(
 \item{lower_boundary_design}{design specifying the lower boundary.}
 
 \item{upper_boundary_design}{design specifying the upper boundary}
+
+\item{check_constraints}{if TRUE, it is checked if constrains are fulfilled}
 
 \item{opts}{options list passed to nloptr}
 
