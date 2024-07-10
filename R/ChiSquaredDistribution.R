@@ -116,7 +116,7 @@ get_tau_Pearson2xK <- function(p_vector) {
 #' @rdname ZSquared-class
 #' @export
 ZSquared <- function(two_armed = TRUE) {
-  new("ZSquared", df = 1L, multiplier = 1L + two_armed)
+  new("ZSquared", df = 1L, multiplier = 1L + ifelse(two_armed, 1L, 0L))
 }
 
 
@@ -129,7 +129,7 @@ ZSquared <- function(two_armed = TRUE) {
 #' @rdname ZSquared-class
 #'
 #' @export
-get_tau_ZSquared <- function(mu, sigma = 1){
+get_tau_ZSquared <- function(mu, sigma) {
   (mu / sigma)^2
 }
 
