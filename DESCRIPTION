@@ -38,7 +38,8 @@ Collate:
     DataDistribution.R
     BinomialDistribution.R
     NormalDistribution.R
-    StudentDistribution.R             
+    StudentDistribution.R 
+    ChiSquaredDistribution.R
     Prior.R
     PointMassPrior.R
     ContinuousPrior.R
