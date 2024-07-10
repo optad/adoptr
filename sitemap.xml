@@ -1,159 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://optad.github.io/adoptr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/articles/adoptr.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/articles/adoptr_jss.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/articles/composite-scores.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/articles/conditional-scores.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/articles/defining-new-scores.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/articles/working-with-priors.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/AverageN2-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/BinomialDataDistribution-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/ConditionalPower-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/ConditionalSampleSize-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/Constraints.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/ContinuousPrior-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/DataDistribution-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/GroupSequentialDesign-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/MaximumSampleSize-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/N1-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/OneStageDesign-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/PointMassPrior-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/Prior-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/Scores.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/StudentDataDistribution-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/TwoStageDesign-class.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/adoptr.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/boundary-designs.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/bounds.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/composite.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/condition.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/critical-values.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/cumulative_distribution_function.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/expectation.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/get_initial_design.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/make_tunable.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/minimize.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/n.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/plot-TwoStageDesign-method.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/posterior.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/predictive_cdf.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/predictive_pdf.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/print.adoptrOptimizationResult.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/probability_density_function.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/simulate-TwoStageDesign-numeric-method.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/subject_to.html</loc>
-  </url>
-  <url>
-    <loc>https://optad.github.io/adoptr/reference/tunable_parameters.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://optad.github.io/adoptr/404.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/LICENSE-text.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/LICENSE.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/articles/adoptr.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/articles/adoptr_jss.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/articles/composite-scores.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/articles/conditional-scores.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/articles/defining-new-scores.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/articles/index.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/articles/working-with-priors.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/authors.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/index.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/news/index.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/AverageN2-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/BinomialDataDistribution-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/ConditionalPower-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/ConditionalSampleSize-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/Constraints.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/ContinuousPrior-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/DataDistribution-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/GroupSequentialDesign-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/MaximumSampleSize-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/N1-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/OneStageDesign-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/PointMassPrior-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/Prior-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/Scores.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/StudentDataDistribution-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/TwoStageDesign-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/adoptr.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/boundary-designs.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/bounds.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/composite.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/condition.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/critical-values.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/cumulative_distribution_function.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/expectation.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/get_initial_design.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/index.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/make_tunable.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/minimize.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/n.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/plot-TwoStageDesign-method.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/posterior.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/predictive_cdf.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/predictive_pdf.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/print.adoptrOptimizationResult.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/probability_density_function.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/simulate-TwoStageDesign-numeric-method.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/subject_to.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/tunable_parameters.html</loc></url>
 </urlset>
+
