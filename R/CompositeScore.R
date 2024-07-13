@@ -1,3 +1,4 @@
+#' @include Scores.R
 setClass("CompositeScore", representation(
         expr       = "{",
         scores     = "list",

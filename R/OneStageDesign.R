@@ -9,6 +9,8 @@
 #'
 #' Note that the default \code{\link{plot,TwoStageDesign-method}} method
 #' is not supported for \code{OneStageDesign} objects.
+#' 
+#' @include TwoStageDesign.R
 #'
 #' @seealso \code{\link{TwoStageDesign}}, \code{\link{GroupSequentialDesign}}
 #'
@@ -23,6 +25,7 @@ setClass("OneStageDesign",  contains = "TwoStageDesign")
 #' summary(design)
 #' design <- TwoStageDesign(design)
 #' summary(design)
+#' 
 #'
 #' @rdname OneStageDesign-class
 #' @export

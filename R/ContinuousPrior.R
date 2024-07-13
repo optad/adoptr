@@ -12,6 +12,8 @@
 #'     approximating integrals over \code{delta}
 #'
 #' @seealso Discrete priors are supported via \code{\link{PointMassPrior}}
+#' 
+#' @include Prior.R
 #'
 #' @aliases ContinuousPrior
 #' @exportClass ContinuousPrior
