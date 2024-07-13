@@ -136,7 +136,7 @@ get_tau_ZSquared <- function(mu, sigma) {
 
 #' @examples
 #' probability_density_function(Pearson2xK(3), 1, 30, get_tau_Pearson2xK(c(0.3, 0.4, 0.7, 0.2)))
-#' probability_density_function(ZSquared(4), 1, 35, get_tau_ZSquared(0.4))
+#' probability_density_function(ZSquared(TRUE), 1, 35, get_tau_ZSquared(0.4, 1))
 #'
 #'
 #' @rdname probability_density_function
@@ -149,7 +149,7 @@ setMethod("probability_density_function", signature("ChiSquared", "numeric", "nu
 
 #' @examples
 #' cumulative_distribution_function(Pearson2xK(3), 1, 30, get_tau_Pearson2xK(c(0.3,0.4,0.7,0.2)))
-#' cumulative_distribution_function(ZSquared(4), 1, 35, get_tau_ZSquared(0.4))
+#' cumulative_distribution_function(ZSquared(TRUE), 1, 35, get_tau_ZSquared(0.4, 1))
 #'
 #'
 #' @rdname cumulative_distribution_function

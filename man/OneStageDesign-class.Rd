@@ -52,6 +52,7 @@ summary(design)
 design <- TwoStageDesign(design)
 summary(design)
 
+
 }
 \seealso{
 \code{\link{TwoStageDesign}}, \code{\link{GroupSequentialDesign}}

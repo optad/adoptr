@@ -74,6 +74,7 @@ power <- Power(Normal(), prior)
 evaluate(power, design)
 evaluate(power, design, optimization = TRUE) # use non-adaptive quadrature
 
+
 }
 \seealso{
 \code{\link{ConditionalPower}}, \code{\link{ConditionalSampleSize}},

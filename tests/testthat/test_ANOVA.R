@@ -79,14 +79,14 @@ test_that("cdf is defined correctly", {
 test_that("quantile is defined correctly", {
   
   dist <- ANOVA(4)
-  x <- seq(0.1, 5, by = 0.1)
+  x <- seq(0.1, 1, by = 0.01)
   n <- 22
   p_vec <- c(0.2, 0.4, 0.7, 0.36)
   theta <- get_tau_ANOVA(p_vec)
   real_ncp <- n * (sum((p_vec - mean(p_vec))^2))
   expect_equal(
-    cumulative_distribution_function(dist, x, n, theta),
-    stats::pf(x, 3, 4 * n - 4, ncp = real_ncp)
+    quantile(dist, x, n, theta),
+    stats::qf(x, 3, 4 * n - 4, ncp = real_ncp)
   )
 })
 

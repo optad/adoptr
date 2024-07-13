@@ -22,6 +22,8 @@
 #' @slot rate_control cf. parameter 'rate_control'
 #'
 #' @template DataDistributionTemplate
+#' 
+#' @include DataDistribution.R
 #'
 #' @rdname BinomialDataDistribution-class
 #' @exportClass Binomial
