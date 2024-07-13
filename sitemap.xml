@@ -12,8 +12,10 @@
 <url><loc>https://optad.github.io/adoptr/authors.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/index.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/news/index.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/ANOVA-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/AverageN2-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/BinomialDataDistribution-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/ChiSquaredDataDistribution-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/ConditionalPower-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/ConditionalSampleSize-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/Constraints.html</loc></url>
@@ -22,13 +24,16 @@
 <url><loc>https://optad.github.io/adoptr/reference/GroupSequentialDesign-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/MaximumSampleSize-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/N1-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/NestedModels-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/NormalDataDistribution-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/OneStageDesign-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/Pearson2xK-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/PointMassPrior-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/Prior-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/Scores.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/StudentDataDistribution-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/TwoStageDesign-class.html</loc></url>
+<url><loc>https://optad.github.io/adoptr/reference/ZSquared-class.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/adoptr.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/boundary-designs.html</loc></url>
 <url><loc>https://optad.github.io/adoptr/reference/bounds.html</loc></url>
