@@ -55,7 +55,7 @@ Collate:
     'constraints.R'
     'minimize.R'
     'regularization.R'
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 BugReports: https://github.com/optad/adoptr/issues
 URL: https://github.com/optad/adoptr, https://optad.github.io/adoptr/
