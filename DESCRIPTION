@@ -51,6 +51,7 @@ Collate:
     'NormalDistribution.R'
     'PointMassPrior.R'
     'StudentDistribution.R'
+    'Survival.R'
     'adoptr.R'
     'constraints.R'
     'minimize.R'

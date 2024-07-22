@@ -363,6 +363,10 @@ test_that("initial design works", {
   )
   
   expect_error(
+    get_initial_design(0.4, 0.025, 0.2, dist = Survival(0.8))
+  )
+  
+  expect_error(
     get_initial_design(-.4, 0.025, .2, "two-stage", dist = Normal(), order = 6L)
   )
   
@@ -406,6 +410,33 @@ test_that("initial design works", {
   expect_true(
     is(get_initial_design(0.04, 0.05, 0.2, "group-sequential", dist = ANOVA(2)),
        "GroupSequentialDesign")
+  )
+  
+  expect_true(
+    is(get_initial_design(1.4, .025, .2, "two-stage", type_n2 = "linear_decreasing", 
+                          dist = Survival(0.7), order = 6L, slope = -10),
+       "TwoStageDesignSurvival")
+  )
+  
+  expect_true(
+    is(get_initial_design(1.4, .025, .2, "two-stage", dist = Survival(0.7), order = 6L),
+       "TwoStageDesignSurvival")
+  )
+  
+  expect_true(
+    is(get_initial_design(1.4, .025, .2, "two-stage", type_n2 = "linear_increasing", 
+                          dist = Survival(0.7), order = 6L, slope = 10),
+       "TwoStageDesignSurvival")
+  )
+  
+  expect_true(
+    is(get_initial_design(1.4, .025, .2, "group-sequential", dist = Survival(0.7), order = 6L),
+       "GroupSequentialDesignSurvival")
+  )
+  
+  expect_true(
+    is(get_initial_design(1.4, .025, .2, "one-stage", dist = Survival(0.7)),
+       "OneStageDesignSurvival")
   )
   
   expect_error(

@@ -213,7 +213,7 @@ get_initial_design <- function(theta,
                                info_ratio = 0.5,
                                slope,
                                weight = sqrt(info_ratio),
-                               order = 7L,...){
+                               order = 7L,...) {
   
   # match the inputs
   type_design <- match.arg(type_design)
@@ -275,7 +275,8 @@ get_initial_design <- function(theta,
       (1 - cumulative_distribution_function(dist, ce, n, theta)) - power
     }
     n <- stats::uniroot(find_n, interval = c(0, 1000), extendInt = "upX")$root
-    return(OneStageDesign(n, ce))
+    ifelse(is(dist, "Survival"), return(OneStageDesign(n, ce, event_rate=dist@event_rate)),
+           return(OneStageDesign(n, ce)))
   }
   
   # case 1: constant c2 function
@@ -353,7 +354,7 @@ get_initial_design <- function(theta,
     }
     
     # we need to evaluate this function at each pivot
-    critical_values <- function(z){
+    critical_values <- function(z) {
       (c - w1 * z) / sqrt(1 - w1**2)
     }
     oldnodes <- GaussLegendreRule(as.integer(order))$nodes
@@ -390,8 +391,9 @@ get_initial_design <- function(theta,
     n2 <- (1-info_ratio) * n
     # if(length(c2)!=1) n2 <- rep(n2,order)
     
-    design <-  GroupSequentialDesign(n1, cf, ce, n2, c2, order = order)
-    return(design)
+    ifelse(is(dist, "Survival"), 
+           return(GroupSequentialDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)), 
+           return(GroupSequentialDesign(n1, cf, ce, n2, c2, order = order)))
   }
   
   # for two-stage designs, the four different n2-designs need to be considered
@@ -424,9 +426,11 @@ get_initial_design <- function(theta,
       n2 <- (1 - info_ratio) * n
       if(length(c2) != 1) n2 <- rep(n2, order)
       
-      design <-  TwoStageDesign(n1, cf, ce, n2, c2, order = order)
-      return(design)
+      ifelse(is(dist,"Survival"), 
+             return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
+             return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
     }
+      
     
     # the optimal n2 function is evaluated at each pivot and therefore, it is not constant 
     # first stage sample size is determined like before.
@@ -491,9 +495,10 @@ get_initial_design <- function(theta,
         }
       }
       
-      if(type_n2 == "optimal") {
-        design <-  TwoStageDesign(n1, cf, ce, n2, c2)
-        return(design)
+      if (type_n2 == "optimal") {
+        ifelse(is(dist,"Survival"), 
+               return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
+               return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
       }
       
       if(type_n2 == "linear_decreasing") {
@@ -544,8 +549,9 @@ get_initial_design <- function(theta,
                                     silent = TRUE))
         }
         if(slope > 0) {# nocov start
-          design <-  TwoStageDesign(n1, cf, ce, n2, c2)
-          return(design)# nocov end
+          ifelse(is(dist,"Survival"), 
+                 return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
+                 return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))# nocov end
         }
         
         y_intercept <- stats::uniroot(find_y_intercept,
@@ -562,8 +568,9 @@ get_initial_design <- function(theta,
         
         #evaluate n2 function at pivots
         n2 <- n2func(newnodes)
-        design <-  TwoStageDesign(n1, cf, ce, n2, c2)
-        return(design)
+        ifelse(is(dist,"Survival"), 
+               return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
+               return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
       }
       
       if(type_n2 == "linear_increasing") {
@@ -620,15 +627,16 @@ get_initial_design <- function(theta,
         }
         
         if(slope < 0) {# nocov start
-          design <-  TwoStageDesign(n1, cf, ce, n2, c2)
-          return(design)# nocov end
+          ifelse(is(dist,"Survival"), 
+                 return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
+                 return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))# nocov end
         }
         
         y_intercept <- stats::uniroot(find_y_intercept,
                                       interval = c(start_value, 1000),
                                       extendInt = "upX", slope = slope)$root
         
-        n2func <- function(z){
+        n2func <- function(z) {
           slope * z + y_intercept
         }
         
@@ -638,13 +646,13 @@ get_initial_design <- function(theta,
         
         #evaluate n2 function at pivots
         n2 <- n2func(newnodes)
-        design <-  TwoStageDesign(n1, cf, ce, n2, c2)
-        return(design)
+        ifelse(is(dist,"Survival"), 
+               return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
+               return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
       }
     }
   }
 }
-
 
 
 

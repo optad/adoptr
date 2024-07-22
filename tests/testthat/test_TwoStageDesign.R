@@ -36,7 +36,47 @@ test_that("gaussian quadrature constructor", {
 
 }) # end 'gaussian quadrature constructor'
 
-
+test_that("TwoStageDesignSurvival can be constructed",{
+  n1           <-  49.6
+  c1f          <-   0.7
+  c1e          <-   2.5
+  number_knots <-   5L
+  n2_piv       <- rep(49.6, number_knots)
+  c2_piv       <- rep(1.96, number_knots)
+  design       <- TwoStageDesign(n1, c1f, c1e, n2_piv, c2_piv, number_knots, 0.7)
+  
+  expect_equal(
+    c(n1, c1f, c1e),
+    c(design@n1, design@c1f, design@c1e),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  x1 <- seq(c1f, c1e, length.out = 11)
+  
+  expect_equal(
+    n2(design, x1, round = FALSE),
+    rep(49.6, length(x1)),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  expect_equal(
+    n2(design, x1),
+    rep(50, length(x1)),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  expect_equal(
+    n(design, x1),
+    rep(100, length(x1)),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  #summary uses one extra parameter for event rate
+  
+  des <- TwoStageDesign(n1, c1f, c1e, n2_piv, c2_piv, number_knots, 0.8)
+  
+  expect_equal(
+    length(summary(des)),
+    9
+  )
+  
+})# end 'TwoStageDesignSurvival can be constructed"
 
 test_that("simulate works (as last time)", {
 
@@ -93,6 +133,12 @@ test_that("show method", {
     "TwoStageDesign<n1=50;0.7<=x1<=2.5:n2=50> "
   )
   
+  design <- TwoStageDesign(50, 0.7, 2.5, rep(49.6, 7), rep(1.96, 7), 7, 0.7)
+  expect_equal(
+    paste0(capture.output(show(design)), collapse = "\n\r"),
+    "TwoStageDesignSurvival<n_events1=50;0.7<=x1<=2.5;n_events2=50> "
+  )
+  
 })
 
 
@@ -103,6 +149,13 @@ test_that("print method", {
   expect_equal(
     length(paste0(capture.output(print(design_summary)))),
     8
+  )
+  
+  design <- TwoStageDesign(50, 0.7, 2.5, rep(49.6,7), rep(1.96,7), 7, 0.7)
+  design_summary <- summary(design, "CP"=cp, "Power"=pow)
+  expect_equal(
+    length(paste0(capture.output(print(design_summary)))),
+    11
   )
   
 })
@@ -147,3 +200,42 @@ test_that("boundary designs keep monotonicity", {
         sign(diff(d_ub@c2_pivots)) == sign(diff(d@c2_pivots))))
 
 }) # end 'boundary designs keep monotonicity'
+
+test_that("design is correctly converted",{
+  des_survival <- TwoStageDesign(design, 0.7)
+  
+  expect_true(
+    is(des_survival,"TwoStageDesignSurvival")
+  )
+  
+  expect_equal(
+    c(n1, c1f, c1e),
+    c(des_survival@n1, des_survival@c1f, des_survival@c1e),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  x1 <- seq(c1f, c1e, length.out = 11)
+  
+  expect_equal(
+    n2(des_survival, x1, round = FALSE),
+    rep(49.6, length(x1)),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  expect_equal(
+    n2(des_survival, x1),
+    rep(50, length(x1)),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  expect_equal(
+    n(des_survival, x1),
+    rep(100, length(x1)),
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  expect_equal(
+    des_survival, SurvivalDesign(design, 0.7)
+  )
+  
+  expect_equal(
+    design, TwoStageDesign(design)
+  )
+  
+})
