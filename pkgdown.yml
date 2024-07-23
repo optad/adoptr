@@ -7,8 +7,9 @@ articles:
   composite-scores: composite-scores.html
   conditional-scores: conditional-scores.html
   defining-new-scores: defining-new-scores.html
+  other-endpoints: other-endpoints.html
   working-with-priors: working-with-priors.html
-last_built: 2024-07-23T09:26Z
+last_built: 2024-07-23T12:01Z
 urls:
   reference: https://optad.github.io/adoptr/reference
   article: https://optad.github.io/adoptr/articles
