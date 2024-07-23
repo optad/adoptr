@@ -58,9 +58,15 @@ c<sub>2</sub>(x<sub>1</sub>) = ifelse(x<sub>1</sub>NaN).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">OneStageDesign</span><span class="op">(</span><span class="va">n</span>, <span class="va">c</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">OneStageDesign</span><span class="op">(</span><span class="va">n</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'numeric'</span></span>
+<span><span class="fu">OneStageDesign</span><span class="op">(</span><span class="va">n</span>, <span class="va">c</span>, <span class="va">event_rate</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'OneStageDesign'</span></span>
+<span><span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">n1</span>, <span class="va">event_rate</span>, order <span class="op">=</span> <span class="fl">5L</span>, eps <span class="op">=</span> <span class="fl">0.01</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'OneStageDesignSurvival'</span></span>
 <span><span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">n1</span>, order <span class="op">=</span> <span class="fl">5L</span>, eps <span class="op">=</span> <span class="fl">0.01</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'OneStageDesign'</span></span>
@@ -75,8 +81,17 @@ c<sub>2</sub>(x<sub>1</sub>) = ifelse(x<sub>1</sub>NaN).</p>
 <dd><p>sample size (stage-one sample size)</p></dd>
 
 
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>further optional arguments</p></dd>
+
+
 <dt id="arg-c">c<a class="anchor" aria-label="anchor" href="#arg-c"></a></dt>
 <dd><p>rejection boundary (c = c<sub>1</sub><sup>f</sup> = c<sub>1</sub><sup>e</sup>)</p></dd>
+
+
+<dt id="arg-event-rate">event_rate<a class="anchor" aria-label="anchor" href="#arg-event-rate"></a></dt>
+<dd><p>probability that a subject in either group will eventually have an event,
+only needs to be specified for time-to-event endpoints.</p></dd>
 
 
 <dt id="arg-n-">n1<a class="anchor" aria-label="anchor" href="#arg-n-"></a></dt>
@@ -94,10 +109,6 @@ integration rule to use for new TwoStageDesign.</p></dd>
 split in a continuation interval [c1f, c1e]; this is given by c +/- eps.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>further optional arguments</p></dd>
-
-
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>design to plot</p></dd>
 
@@ -113,7 +124,7 @@ is not supported for <code>OneStageDesign</code> objects.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="TwoStageDesign-class.html">TwoStageDesign</a></code>, <code><a href="GroupSequentialDesign-class.html">GroupSequentialDesign</a></code></p></div>
+    <div class="dont-index"><p><code><a href="TwoStageDesign-class.html">TwoStageDesign</a></code>, <code><a href="GroupSequentialDesign-class.html">GroupSequentialDesign-class</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -126,16 +137,18 @@ is not supported for <code>OneStageDesign</code> objects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   c2(x1):     +Inf |    NA |  -Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n2(x1):        0 |     0 |     0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">design_twostage</span> <span class="op">&lt;-</span> <span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">design_twostage</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> TwoStageDesign: n1 =  30 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           futility |            continue           | efficacy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       x1:     1.95 |  1.95  1.95  1.96  1.97  1.97 |  1.97</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   c2(x1):     +Inf | +3.00 +3.00 +0.00 -3.00 -3.00 |  -Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n2(x1):        0 |     0     0     0     0     0 |     0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">design_survival</span> <span class="op">&lt;-</span> <span class="fu">OneStageDesign</span><span class="op">(</span><span class="fl">30</span>, <span class="fl">1.96</span>, <span class="fl">0.7</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">design_survival</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TwoStageDesignSurvival&lt;n_events1=30;1.9&lt;=x1&lt;=2.0;n_events2=0&gt; </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

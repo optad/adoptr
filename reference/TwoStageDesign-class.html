@@ -97,7 +97,16 @@ For available methods, see the 'See Also' section at the end of this page.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TwoStageDesign</span><span class="op">(</span><span class="va">n1</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'numeric'</span></span>
-<span><span class="fu">TwoStageDesign</span><span class="op">(</span><span class="va">n1</span>, <span class="va">c1f</span>, <span class="va">c1e</span>, <span class="va">n2_pivots</span>, <span class="va">c2_pivots</span>, order <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">TwoStageDesign</span><span class="op">(</span></span>
+<span>  <span class="va">n1</span>,</span>
+<span>  <span class="va">c1f</span>,</span>
+<span>  <span class="va">c1e</span>,</span>
+<span>  <span class="va">n2_pivots</span>,</span>
+<span>  <span class="va">c2_pivots</span>,</span>
+<span>  order <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">event_rate</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'TwoStageDesign'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, rounded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -138,6 +147,11 @@ pivot points</p></dd>
 integration rule to evaluate scores. Automatically set to <code>length(n2_pivots)</code> if <br><code>length(n2_pivots) == length(c2_pivots) &gt; 1</code>, otherwise c2 and n2
 are taken to be constant in stage-two and replicated to match the number of
 pivots specified by <code>order</code></p></dd>
+
+
+<dt id="arg-event-rate">event_rate<a class="anchor" aria-label="anchor" href="#arg-event-rate"></a></dt>
+<dd><p>probability that a subject in either group will eventually have an event,
+only needs to be specified for time-to-event endpoints</p></dd>
 
 
 <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>

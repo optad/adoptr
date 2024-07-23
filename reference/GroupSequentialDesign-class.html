@@ -58,9 +58,24 @@ Any group-sequential design can be converted to a fully flexible
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">GroupSequentialDesign</span><span class="op">(</span><span class="va">n1</span>, <span class="va">c1f</span>, <span class="va">c1e</span>, <span class="va">n2_pivots</span>, <span class="va">c2_pivots</span>, order <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">GroupSequentialDesign</span><span class="op">(</span><span class="va">n1</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'numeric'</span></span>
+<span><span class="fu">GroupSequentialDesign</span><span class="op">(</span></span>
+<span>  <span class="va">n1</span>,</span>
+<span>  <span class="va">c1f</span>,</span>
+<span>  <span class="va">c1e</span>,</span>
+<span>  <span class="va">n2_pivots</span>,</span>
+<span>  <span class="va">c2_pivots</span>,</span>
+<span>  order <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">event_rate</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'GroupSequentialDesign'</span></span>
+<span><span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">n1</span>, <span class="va">event_rate</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'GroupSequentialDesignSurvival'</span></span>
 <span><span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">n1</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -71,6 +86,10 @@ Any group-sequential design can be converted to a fully flexible
 <dl><dt id="arg-n-">n1<a class="anchor" aria-label="anchor" href="#arg-n-"></a></dt>
 <dd><p>stage one sample size or <code>GroupSequentialDesign</code> object to convert
 (overloaded from <code><a href="TwoStageDesign-class.html">TwoStageDesign</a></code>)</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>further optional arguments</p></dd>
 
 
 <dt id="arg-c-f">c1f<a class="anchor" aria-label="anchor" href="#arg-c-f"></a></dt>
@@ -91,13 +110,14 @@ pivot points</p></dd>
 
 
 <dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
-<dd><p>of the Gaussian uadrature rule to use for integration, set to
+<dd><p>of the Gaussian quadrature rule to use for integration, set to
 length(c2_pivots) if NULL, otherwise first value of c2_pivots is repeated
 'order'-times.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>further optional arguments</p></dd>
+<dt id="arg-event-rate">event_rate<a class="anchor" aria-label="anchor" href="#arg-event-rate"></a></dt>
+<dd><p>probability that a subject in either group will eventually have an event,
+only needs to be specified for time-to-event endpoints.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -116,8 +136,13 @@ length(c2_pivots) if NULL, otherwise first value of c2_pivots is repeated
 <span class="r-out co"><span class="r-pr">#&gt;</span>   n2(x1):        0 |    25    25    25 |     0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">design_survival</span> <span class="op">&lt;-</span> <span class="fu">GroupSequentialDesign</span><span class="op">(</span><span class="fl">25</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">25</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span><span class="op">)</span>, event_rate <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> TwoStageDesign&lt;n1=25;0.0&lt;=x1&lt;=2.0:n2=25&gt; </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="TwoStageDesign-class.html">TwoStageDesign</a></span><span class="op">(</span><span class="va">design_survival</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TwoStageDesignSurvival&lt;n_events1=25;0.0&lt;=x1&lt;=2.0;n_events2=25&gt; </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
