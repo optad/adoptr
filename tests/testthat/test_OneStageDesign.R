@@ -93,6 +93,36 @@ test_that("Optimal one-stage design with point prior is computable", {
 
 })
 
+test_that("OneStageDesignSurvival works correctly",{
+  dist       <- Survival(0.7)
+  n1         <- 80
+  c1f        <- 2.0
+  event_rate <- 0.7
+  H_1        <- PointMassPrior(1.4, 1)
+  
+  design  <- OneStageDesign(n1, c1f, event_rate)
+  
+  expect_equal(
+    evaluate(Power(dist, H_1), design),
+    0.55094, tolerance = 1e-3
+  )
+  
+  expect_equal(
+    design@n1,
+    80
+  )
+  
+  expect_equal(
+    n2(design, 1.0),
+    0.0,
+    tolerance = sqrt(.Machine$double.eps), scale = 1)
+  
+  expect_true(
+    c2(design, 1.0) == Inf)
+  
+  expect_true(
+    c2(design, 3.0) == -Inf)
+}) 
 
 
 test_that("error definition works", {
@@ -135,13 +165,52 @@ test_that("OneStageDesign can be converted to TwoStageDesign", {
 
 }) # end 'OneStageDesign can be converted to TwoStageDesign'
 
+test_that("Conversion to survival design successful",{
+  design  <- OneStageDesign(80, 2)
+  design1 <- OneStageDesign(80, 2, 0.7)
+  
+  expect_equal(
+    SurvivalDesign(design, 0.7), design1
+  )
+  
+  expect_equal(
+    OneStageDesign(design, 0.7), design1
+  )
+  
+  expect_equal(
+    OneStageDesign(design), design
+  )
+  
+  design2 <- TwoStageDesign(design, order = 7, event_rate = 0.7)
+  design3 <- TwoStageDesign(design1)
+  design4 <- TwoStageDesign(design, event_rate = 0.7)
+  
+  expect_equal(
+    design4, design3
+  )
+  
+  pow <- Power(Normal(two_armed = TRUE), PointMassPrior(1.4, 1))
+  
+  expect_true(length(design2@x1_norm_pivots) == 7)
+  expect_true(length(design2@n2_pivots) == 7)
+  
+  expect_equal(
+    evaluate(pow, design1),
+    evaluate(pow, design2),
+    tolerance = 1e-6, scale = 1)
+}) # end 'Survival Design is converted to TwoStageSurvival design'
 
 
 test_that("show method returns design name", {
-
-    expect_equal(
+  
+  expect_equal(
         capture.output(show(OneStageDesign(90, 2.0))),
         "OneStageDesign<n=90;c=2.00> "
-    )
+  )
+  
+  expect_equal(
+    capture.output(show(OneStageDesign(90, 2.0,0.8))),
+    "OneStageDesignSurvival<n_events=90;c=2.00> "
+  )
 
 })

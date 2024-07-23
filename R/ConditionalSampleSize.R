@@ -22,6 +22,7 @@
 #' evaluate(css, design, c(0, .5, 3))
 #'
 #' ess   <- ExpectedSampleSize(Normal(), prior)
+#' ene <- ExpectedNumberOfEvents(Survival(0.7), PointMassPrior(1.7, 1))
 #'
 #' # those two are equivalent
 #' evaluate(ess, design)
@@ -46,6 +47,10 @@ ConditionalSampleSize <- function(label = "n(x1)") new("ConditionalSampleSize", 
 ExpectedSampleSize <- function(dist, prior, label = "E[n(x1)]") {
     expected(ConditionalSampleSize(), dist, prior, label = label)
 }
+
+#' @rdname ConditionalSampleSize-class
+#' @export
+ExpectedNumberOfEvents <- ExpectedSampleSize
 
 
 

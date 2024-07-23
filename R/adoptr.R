@@ -33,8 +33,9 @@
 #'
 #' @section Data distributions:
 #'
-#' Currently, the only implemented data distribution is \code{\link{Normal}}
-#' (one or two arms).
+#' The implemented data distributions are \code{\link{Normal}}, \code{\link{Binomial}},
+#' \code{\link{Student}}, \code{\link{Survival}}, \code{\link{ChiSquared}} (including
+#' \code{\link{Pearson2xK}} and \code{\link{ZSquared}}) and \code{\link{ANOVA}}.
 #'
 #'
 #'
