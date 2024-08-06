@@ -351,6 +351,23 @@ test_that("constraint checks are working", {
   )
 }) # end 'constraint checks are working'
 
+
+test_that("c2_decreasing is respected", {
+  opt_gs_2 <- minimize(
+    ess,
+    subject_to(
+      pow  >= 1 - beta,
+      toer <= alpha
+    ),
+    initial_design = get_initial_design(.4, alpha, beta, "group-sequential", dist = datadist, order = 3L),
+    c2_decreasing = TRUE
+  )$design
+  
+  expect_true(all(diff(opt_gs_2@c2_pivots) <= 0))
+  
+}) # end 'c2_decreasing is respected'
+
+
 test_that("initial design works", {
   
   # test that errors are thrown when giving false input
