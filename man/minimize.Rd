@@ -10,6 +10,7 @@ minimize(
   initial_design,
   lower_boundary_design = get_lower_boundary_design(initial_design),
   upper_boundary_design = get_upper_boundary_design(initial_design),
+  c2_decreasing = FALSE,
   check_constraints = TRUE,
   opts = list(algorithm = "NLOPT_LN_COBYLA", xtol_rel = 1e-05, maxeval = 10000),
   ...
@@ -25,6 +26,8 @@ minimize(
 \item{lower_boundary_design}{design specifying the lower boundary.}
 
 \item{upper_boundary_design}{design specifying the upper boundary}
+
+\item{c2_decreasing}{if TRUE, the c2_pivots are forced to be monotonically decreasing}
 
 \item{check_constraints}{if TRUE, it is checked if constrains are fulfilled}
 

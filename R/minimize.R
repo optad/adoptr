@@ -14,6 +14,7 @@
 #' @param initial_design initial guess (x0 for nloptr)
 #' @param lower_boundary_design design specifying the lower boundary.
 #' @param upper_boundary_design design specifying the upper boundary
+#' @param c2_decreasing if TRUE, the c2_pivots are forced to be monotonically decreasing
 #' @param check_constraints if TRUE, it is checked if constrains are fulfilled
 #' @param opts options list passed to nloptr
 #' @param ... further optional arguments passed to \code{\link{nloptr}}
@@ -56,6 +57,7 @@ minimize <- function(
     initial_design,
     lower_boundary_design = get_lower_boundary_design(initial_design),
     upper_boundary_design = get_upper_boundary_design(initial_design),
+    c2_decreasing = FALSE,
     check_constraints = TRUE,
     opts         =  list(
         algorithm   = "NLOPT_LN_COBYLA",
@@ -78,11 +80,15 @@ minimize <- function(
     g_cnstr <- function(params) {
         design <- update(initial_design, params)
         user_cnstr <- evaluate(subject_to, design, optimization = TRUE)
-        return(c(
-            user_cnstr,
-            design@c1f - design@c1e + ifelse( # ensure c1e > c1f if not one-stage
-                is(initial_design, "OneStageDesign"), 0, .1)
-        ))
+        constraints <- c(
+          user_cnstr,
+          design@c1f - design@c1e + ifelse( # ensure c1e > c1f if not one-stage
+            is(initial_design, "OneStageDesign"), 0, .1)
+        )
+        if (c2_decreasing & !is(initial_design, "OneStageDesign")) {
+          constraints <- c(constraints, diff(design@c2_pivots))
+        }
+        return(constraints)
     }
 
     res <- nloptr::nloptr(
