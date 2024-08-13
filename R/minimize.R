@@ -17,7 +17,7 @@
 #' @param c2_decreasing if TRUE, the c2_pivots are forced to be monotonically decreasing
 #' @param check_constraints if TRUE, it is checked if constrains are fulfilled
 #' @param opts options list passed to nloptr
-#' @param ... further optional arguments passed to \code{\link{nloptr}}
+#' @param ... further optional arguments passed to \code{\link[nloptr]{nloptr}}
 #'
 #' @return a list with elements:
 #'     \item{design}{ The resulting optimal design}

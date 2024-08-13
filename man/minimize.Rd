@@ -33,7 +33,7 @@ minimize(
 
 \item{opts}{options list passed to nloptr}
 
-\item{...}{further optional arguments passed to \code{\link{nloptr}}}
+\item{...}{further optional arguments passed to \code{\link[nloptr]{nloptr}}}
 }
 \value{
 a list with elements:
