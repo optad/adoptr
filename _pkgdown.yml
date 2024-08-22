@@ -18,6 +18,8 @@ navbar:
       href: articles/composite-scores.html
     - text: Definining New Scores
       href: articles/defining-new-scores.html
+    - text: Non-normal Endpoints
+      href: articles/other-endpoints.html
   - text: Changelog
     href: news/index.html
   - text: Reference
