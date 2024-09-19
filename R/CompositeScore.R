@@ -27,7 +27,7 @@ setMethod("as_character", signature("CompositeScore"), function(x, ...) {
             str[i] <- sub(names(labels)[j], sprintf("{%s}", names(labels)[j]), str[i])
         }
     }
-    as.character(glue::glue(paste0(str[-1], collapse = "; "), .envir = c(labels, x@non_scores)))
+    as.character(glue::glue_data(c(labels, x@non_scores), paste0(str[-1], collapse = "; ")))
 })
 
 
