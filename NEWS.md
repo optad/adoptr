@@ -1,6 +1,6 @@
-# adoptr (development version)
+# adoptr 1.1.1
 
-# adoptr 1.1.0
+* fix issue from new glue update
 
 # adoptr 1.1.0
 
