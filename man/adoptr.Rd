@@ -76,7 +76,7 @@ Authors:
 \itemize{
   \item Kevin Kunzmann \email{kevin.kunzmann@boehringer-ingelheim.com} (\href{https://orcid.org/0000-0002-1140-7143}{ORCID}) [copyright holder]
   \item Jan Meis \email{meis@imbi.uni-heidelberg.de} (\href{https://orcid.org/0000-0001-5407-7220}{ORCID})
-  \item Nico Bruder \email{bruder@imbi.uni-heidelberg.de}
+  \item Nico Bruder \email{bruder@imbi.uni-heidelberg.de} (\href{https://orcid.org/0009-0004-9522-2075}{ORCID})
 }
 
 }
