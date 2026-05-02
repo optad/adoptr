@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">adoptr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -251,6 +251,9 @@ determine the optimal design parameters.</p>
 <span></span>
 <span><span class="va">opt_design</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/minimize.html">minimize</a></span><span class="op">(</span><span class="va">ess</span>,<span class="fu"><a href="../reference/subject_to.html">subject_to</a></span><span class="op">(</span><span class="va">toer_cnstr</span>,<span class="va">epow_cnstr</span><span class="op">)</span>, </span>
 <span>                       initial_design <span class="op">=</span> <span class="va">init</span>, check_constraints <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in minimize(ess, subject_to(toer_cnstr, epow_cnstr), initial_design =</span></span>
+<span><span class="co">#&gt; init, : NLOPT_MAXEVAL_REACHED: Optimization stopped because maxeval (above) was</span></span>
+<span><span class="co">#&gt; reached.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">opt_design</span><span class="op">$</span><span class="va">design</span><span class="op">)</span></span></code></pre></div>
 <p><img src="other-endpoints_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>

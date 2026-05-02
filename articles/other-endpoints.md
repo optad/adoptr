@@ -148,6 +148,9 @@ init <- get_initial_design(0.2,0.025,0.2)
 
 opt_design <- minimize(ess,subject_to(toer_cnstr,epow_cnstr), 
                        initial_design = init, check_constraints = TRUE)
+#> Warning in minimize(ess, subject_to(toer_cnstr, epow_cnstr), initial_design =
+#> init, : NLOPT_MAXEVAL_REACHED: Optimization stopped because maxeval (above) was
+#> reached.
 
 plot(opt_design$design)
 ```
