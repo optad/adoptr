@@ -3,7 +3,7 @@ Type: Package
 Title: Adaptive Optimal Two-Stage Designs
 Version: 1.1.1.9000
 Authors@R: c(person("Kevin", "Kunzmann", role = c("aut", "cph"), email = "kevin.kunzmann@boehringer-ingelheim.com",comment = c(ORCID = "0000-0002-1140-7143")),
-        person("Maximilian", "Pilz", role = c("aut", "cre"), email = "maximilian.pilz@itwm.fraunhofer.de", comment = c(ORCID = "0000-0002-9685-1613")),
+        person("Maximilian", "Pilz", role = c("aut", "cre"), email = "maximilian.pilz@th-nuernberg.de", comment = c(ORCID = "0000-0002-9685-1613")),
         person("Jan", "Meis", role = c("aut"), email = "meis@imbi.uni-heidelberg.de", comment = c(ORCID = "0000-0001-5407-7220")),
         person("Nico", "Bruder", role = c("aut"), email = "bruder@imbi.uni-heidelberg.de", comment = c(ORCID = "0009-0004-9522-2075")))
 Description: Optimize one or two-arm, two-stage designs for clinical trials with 
@@ -56,7 +56,7 @@ Collate:
     'constraints.R'
     'minimize.R'
     'regularization.R'
-RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 BugReports: https://github.com/optad/adoptr/issues
 URL: https://github.com/optad/adoptr, https://optad.github.io/adoptr/
+Config/roxygen2/version: 8.0.0

@@ -1136,7 +1136,7 @@ https://optad.github.io/adoptr/.
 This includes both the function reference and the vignettes in a consistent and
 easily accessible format.
 The online documentation experience is further improved by the integration of
-a full-text docsearch engine (https://www.algolia.com/ref/docsearch).
+a full-text docsearch engine (https://www.algolia.com/developers).
 7. *Extended validation report:* There are limits to what can be done in the
 standard unit testing framework within a package itself
 (cf. https://cran.r-project.org/web/packages/policies.html).
