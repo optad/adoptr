@@ -1,0 +1,126 @@
+# Initial design
+
+The optimization method
+[`minimize`](https://optad.github.io/adoptr/reference/minimize.md)
+requires an initial design for optimization. This function provides a
+variety of possibilities to hand-craft designs that fulfill type I error
+and type II error constraints which may be used as initial designs.
+
+## Usage
+
+``` r
+get_initial_design(
+  theta,
+  alpha,
+  beta,
+  type_design = c("two-stage", "group-sequential", "one-stage"),
+  type_c2 = c("linear_decreasing", "constant"),
+  type_n2 = c("optimal", "constant", "linear_decreasing", "linear_increasing"),
+  dist = Normal(),
+  cf,
+  ce,
+  info_ratio = 0.5,
+  slope,
+  weight = sqrt(info_ratio),
+  order = 7L,
+  ...
+)
+```
+
+## Arguments
+
+- theta:
+
+  the alternative effect size in the normal case, the rate difference
+  under the alternative in the binomial case
+
+- alpha:
+
+  maximal type I error rate
+
+- beta:
+
+  maximal type II error rate
+
+- type_design:
+
+  type of design
+
+- type_c2:
+
+  either linear-decreasing c2-function according to inverse normal
+  combination test or constant c2
+
+- type_n2:
+
+  design of n2-function
+
+- dist:
+
+  distribution of the test statistic
+
+- cf:
+
+  first-stage futility boundary
+
+- ce:
+
+  first-stage efficacy boundary. Note that specifying this boundary
+  implies that the type I error constraint might not be fulfilled
+  anymore
+
+- info_ratio:
+
+  the ratio between first and second stage sample size
+
+- slope:
+
+  slope of n2 function
+
+- weight:
+
+  weight of first stage test statistics in inverse normal combination
+  test
+
+- order:
+
+  desired integration order
+
+- ...:
+
+  further optional arguments
+
+## Value
+
+An object of class
+[`TwoStageDesign`](https://optad.github.io/adoptr/reference/TwoStageDesign-class.md).
+
+## Details
+
+The distribution of the test statistic is specified by `dist`. The
+default assumes a two-armed z-test. The first stage efficacy boundary
+and the \\c2\\ boundary are chosen as Pocock-boundaries, so either
+\\c_e=c_2\\ if \\c_2\\ is constant or \\c_e=c\\, where the null
+hypothesis is rejected if \\w_1 Z_1+w_2 Z_2\>c\\. By specifying \\ce\\,
+it's clear that the boundaries are not Pocock-boundaries anymore, so the
+type I error constraint may not be fulfilled. IMPORTANT: When using the
+t-distribution or ANOVA, the design does probably not keep the type I
+and type II error, only approximate designs are returned.
+
+## Examples
+
+``` r
+init <- get_initial_design(
+   theta = 0.3,
+   alpha = 0.025,
+   beta  = 0.2,
+   type_design="two-stage",
+   type_c2="linear_decreasing",
+   type_n2="linear_increasing",
+   dist=Normal(),
+   cf=0.7,
+   info_ratio=0.5,
+   slope=23,
+   weight = 1/sqrt(3)
+)
+```

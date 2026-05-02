@@ -1,0 +1,80 @@
+# Working with priors
+
+Internally, **adoptr** is built around the joint distribution of a test
+statistic and the unknown location parameter of interest given a sample
+size, i.e.
+``` math
+\mathcal{L}\big[(X_i, \theta)\,|\,n_i\big]
+```
+where $`X_i`$ is the stage-$`i`$ test statistic and $`n_i`$ the
+corresponding sample size. The distribution class for $`X_i`$ is defined
+by specifying a `DataDistribution` object, e.g., a normal distribution
+
+``` r
+
+library(adoptr)
+
+datadist <- Normal()
+```
+
+To completely specify the marginal distribution of $`X_i`$, the
+distribution of $`\theta`$ must also be specified. The classical case
+where $`\theta`$ is considered fixed, emerges as special case when a
+single parameter value has probability mass 1.
+
+### Discrete priors
+
+The simplest supported prior class are discrete `PointMassPrior` priors.
+To specify a discrete prior, one simply specifies the vector of pivot
+points with positive mass and the vector of corresponding probability
+masses. E.g., consider an example where the point $`\delta = 0.1`$ has
+probability mass $`0.4`$ and the point $`\delta = 0.25`$ has mass
+$`1 - 0.4 = 0.6`$.
+
+``` r
+
+disc_prior <- PointMassPrior(c(0.1, 0.25), c(0.4, 0.6))
+```
+
+For details on the provided methods, see `?DiscretePrior`.
+
+### Continuous priors
+
+**adoptr** also supports arbitrary continuous priors with support on
+compact intervals. For instance, we could consider a prior based on a
+truncated normal via:
+
+``` r
+
+cont_prior <- ContinuousPrior(
+  pdf     = function(x) dnorm(x, mean = 0.3, sd = 0.2), 
+  support = c(-2, 3)
+)
+```
+
+For details on the provided methods, see
+[`?ContinuousPrior`](https://optad.github.io/adoptr/reference/ContinuousPrior-class.md).
+
+### Conditioning
+
+In practice, the most important operation will be conditioning. This is
+important to implement type one and type two error rate constraints.
+Consider, e.g., the case of power. Typically, a power constraint is
+imposed on a single point in the alternative, e.g. using the constraint
+
+``` r
+
+Power(Normal(), PointMassPrior(.4, 1)) >= 0.8
+#> -Pr[x2>=c2(x1)]  <= -0.8
+```
+
+If uncertainty about the true response rate should be incorporated in
+the design, it makes sense to assume a continuous prior on $`\theta`$.
+In this case, the prior should be conditioned for the power constraint
+to avoid integrating over the null hypothesis:
+
+``` r
+
+Power(Normal(), condition(cont_prior, c(0, 3))) >= 0.8
+#> -Pr[x2>=c2(x1)]  <= -0.8
+```

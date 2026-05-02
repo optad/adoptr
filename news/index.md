@@ -1,0 +1,117 @@
+# Changelog
+
+## adoptr 1.1.2
+
+- fix documentation problem according to CRAN checks
+- update maintainer e-mail
+
+## adoptr 1.1.1
+
+CRAN release: 2024-10-02
+
+- fix issue from new glue update
+
+## adoptr 1.1.0
+
+CRAN release: 2024-08-19
+
+- include survival endpoints
+- add F-distribution and chi-squared distribution
+- check if constraints are fulfilled
+- update `get_initial_design`
+- vignettes for binomial and time-to-event endpoints
+
+## adoptr 1.0.1
+
+CRAN release: 2024-06-07
+
+- updated maintainer
+- updated roxygen version
+- fulfill current CRAN requirements
+
+## adoptr 1.0.0
+
+CRAN release: 2021-06-28
+
+- added references to article in journal of statistical software
+
+## adoptr 0.4.3
+
+- corrected class diagram in vignette
+
+## adoptr 0.4.2
+
+CRAN release: 2021-05-28
+
+- minor bug/print fixes
+- Student-t data distribution
+- switched to GitHub Actions for CI/CD
+
+## adoptr 0.4.0
+
+- included JSS article as vignette
+
+## adoptr 0.3.2
+
+CRAN release: 2020-01-09
+
+- bugfix for binomial pdf/cdf
+
+## adoptr 0.3.1
+
+- added support for binomial endpoint
+- initial design creation more convenient
+- extended summary() function for two stage designs
+
+## adoptr 0.3.0
+
+CRAN release: 2019-11-25
+
+- bugfix for pretty printing of optimization results
+- streamlined code for internal evaluation of integral scores during
+  optimization; substantial speedup!
+
+## adoptr 0.2.3
+
+CRAN release: 2019-09-10
+
+- reworked the class printing system to be more informative
+- minimize() now also returns an S3 class object to allow
+  pretty-printing
+
+## adoptr 0.2.2
+
+CRAN release: 2019-07-02
+
+- fixed references to SIM paper
+
+## adoptr 0.2.1
+
+- added references to SIM paper in all relevant places
+
+## adoptr 0.2.0
+
+CRAN release: 2019-06-04
+
+- new feature: composite scores allows more generic expressions than
+  just affine score combinations, cf. composite()
+- affine scores (s1 + 2\*s2) are no longer supported, use composite
+  instead
+- more consistent class system: conditional scores no longer need a
+  specification of distributions by default (no need for conditional
+  sampel size e.g.). Instead, expected() now requires explicit
+  specification of the data and prior distribution to integrate with.
+- Vignettes updated
+- fixed broked tests due to updated rpact
+
+## adoptr 0.1.1
+
+CRAN release: 2019-04-01
+
+- extended Description field in DESCRIPTION to full paragraph
+- provided examples for all user facing functions
+- revision of docs
+
+## adoptr 0.1.0
+
+- initial release

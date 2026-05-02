@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Get started with adoptr • adoptr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Get started with adoptr">
 </head>
 <body>
@@ -67,7 +66,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Get started with adoptr</h1>
             
-            <h4 data-toc-skip class="date">2024-10-03</h4>
+            <h4 data-toc-skip class="date">2026-05-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/optad/adoptr/blob/main/vignettes/adoptr.Rmd" class="external-link"><code>vignettes/adoptr.Rmd</code></a></small>
       <div class="d-none name"><code>adoptr.Rmd</code></div>
@@ -96,7 +95,7 @@ necessary, in fact, that they are counter-productive, since the
 pre-specified weights might be sub-optimal. Instead, one may see the
 problem of defining an optimal two-stage designs as a variational
 problem to find the optimal configuration
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mo>:=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mo>:=</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 \mathcal{D}:=\big(n_1, c_1^e, c_1^f, n_2(\cdot), c_2(\cdot)\big)
 </annotation></semantics></math> directly for a given objective function
 and potentially a set of constraints. The relaxation of this
@@ -224,7 +223,7 @@ together with its conditional power.</p>
 <span>  <span class="va">opt_res</span><span class="op">$</span><span class="va">design</span>, </span>
 <span>  <span class="st">"Conditional power"</span> <span class="op">=</span> <span class="fu"><a href="../reference/ConditionalPower-class.html">ConditionalPower</a></span><span class="op">(</span><span class="va">datadist</span>, <span class="va">H_1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="adoptr_files/figure-html/plot-optimal-design-1.png" width="672"></p>
+<p><img src="adoptr_files/figure-html/plot-optimal-design-1.png" class="r-plt" alt="" width="672"></p>
 <p>Numerical integration yields an expected sample size of</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Scores.html">evaluate</a></span><span class="op">(</span><span class="va">ess</span>, <span class="va">opt_res</span><span class="op">$</span><span class="va">design</span><span class="op">)</span></span>
@@ -287,7 +286,7 @@ new scores</a>.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

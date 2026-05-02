@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>The adoptr Package: Adaptive Optimal Designs for Clinical Trials in R • adoptr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="The adoptr Package: Adaptive Optimal Designs for Clinical Trials in R">
 </head>
 <body>
@@ -97,7 +96,7 @@ Kieser</h4>
 Heidelberg<br><a class="author_email" href="mailto:#"></a><a href="mailto:meinhard.kieser@imbi.uni-heidelberg.de" class="email">meinhard.kieser@imbi.uni-heidelberg.de</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2024-10-03</h4>
+            <h4 data-toc-skip class="date">2026-05-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/optad/adoptr/blob/main/vignettes/adoptr_jss.Rmd" class="external-link"><code>vignettes/adoptr_jss.Rmd</code></a></small>
       <div class="d-none name"><code>adoptr_jss.Rmd</code></div>
@@ -129,16 +128,17 @@ under .</p>
 </h2>
 <p>Confirmatory clinical trials are conducted in a strictly regulated
 environment. A key quality criterion put forward by the relevant
-agencies (<span class="citation">US Food and Drug Administration et al.
-(2019)</span>, <span class="citation">Committee for Medicinal Products
-for Human Use and others (2007)</span>) for a study that is supposed to
-provide evidence for the regulatory acceptance of a new drug or
-treatment is strict type one error rate control. This requirement was
-often seen as conflicting with the perceived need to make trials more
-flexible by, e.g., early stopping for futility, group-sequential
-enrollment, or even adaptive sample size recalculation. An excellent
-historical review of the development of the field of adaptive clinical
-trial designs and the struggles along the way is given in <span class="citation">Bauer et al. (2015)</span>.</p>
+agencies (<span class="citation"><span class="nocase">US Food and Drug
+Administration et al.</span> (2019)</span>, <span class="citation">Committee for Medicinal Products for Human Use and
+others (2007)</span>) for a study that is supposed to provide evidence
+for the regulatory acceptance of a new drug or treatment is strict type
+one error rate control. This requirement was often seen as conflicting
+with the perceived need to make trials more flexible by, e.g., early
+stopping for futility, group-sequential enrollment, or even adaptive
+sample size recalculation. An excellent historical review of the
+development of the field of adaptive clinical trial designs and the
+struggles along the way is given in <span class="citation">Bauer et al.
+(2015)</span>.</p>
 <p>In this manuscript, the focus lies exclusively on adaptive two-stage
 designs with one unblinded interim analysis. Both early stopping for
 futility and efficacy are allowed and the final sample size as well as
@@ -225,13 +225,13 @@ and consider the stage-wise test statistics
 Under the assumption that the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>Y</mi><mi>j</mi><mrow><mi>g</mi><mo>,</mo><mi>i</mi></mrow></msubsup><mover><mo>∼</mo><mrow><mi>i</mi><mi>i</mi><mi>d</mi></mrow></mover><msub><mi>F</mi><mi>g</mi></msub></mrow><annotation encoding="application/x-tex">Y_j^{g, i}\stackrel{iid}{\sim} F_g</annotation></semantics></math>
 with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐄</mi><mrow><mo stretchy="true" form="prefix">[</mo><msub><mi>F</mi><mi>T</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>−</mo><mi>𝐄</mi><mrow><mo stretchy="true" form="prefix">[</mo><msub><mi>F</mi><mi>C</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">\boldsymbol{E}[F_T] - \boldsymbol{E}[F_C] = \theta</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐄</mi><mo stretchy="false" form="prefix">[</mo><msub><mi>F</mi><mi>T</mi></msub><mo stretchy="false" form="postfix">]</mo><mo>−</mo><mi>𝐄</mi><mo stretchy="false" form="prefix">[</mo><msub><mi>F</mi><mi>C</mi></msub><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">\boldsymbol{E}[F_T] - \boldsymbol{E}[F_C] = \theta</annotation></semantics></math>
 and common variance
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>σ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\sigma^2</annotation></semantics></math>,
 by the central limit theorem, the asymptotic distribution of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math>
 is
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><msqrt><mrow><msub><mi>n</mi><mn>1</mn></msub><mi>/</mi><mn>2</mn></mrow></msqrt><mspace width="0.167em"></mspace><mi>θ</mi><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{N}(\sqrt{n_1/2}\, \theta, 1)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒩</mi><mo stretchy="false" form="prefix">(</mo><msqrt><mrow><msub><mi>n</mi><mn>1</mn></msub><mi>/</mi><mn>2</mn></mrow></msqrt><mspace width="0.167em"></mspace><mi>θ</mi><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{N}(\sqrt{n_1/2}\, \theta, 1)</annotation></semantics></math>.
 Formally, the null hypothesis for the superiority test is thus
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ℋ</mi><mn>0</mn></msub><mo>:</mo><mi>θ</mi><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mathcal{H}_0:\theta\leq 0</annotation></semantics></math>.
 Based on the interim outcome
@@ -243,13 +243,13 @@ to stop the trial early for efficacy (early rejection of the null
 hypothesis) if
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>&gt;</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup></mrow><annotation encoding="application/x-tex">X_1&gt;c_1^e</annotation></semantics></math>,
 or to enter stage two if
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">X_1\in[c_1^f, c_1^e]</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">X_1\in[c_1^f, c_1^e]</annotation></semantics></math>.
 Conditional on proceeding to a second stage, it holds that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>2</mn></msub><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><msub><mi>X</mi><mn>1</mn></msub><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo stretchy="true" form="postfix">]</mo></mrow><mo>∼</mo><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><msqrt><mrow><msub><mi>n</mi><mn>2</mn></msub><mi>/</mi><mn>2</mn></mrow></msqrt><mspace width="0.167em"></mspace><mi>θ</mi><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">X_2\,|\,X_1\in[c_1^f, c_1^e]\sim\mathcal{N}(\sqrt{n_2/2}\, \theta, 1)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>2</mn></msub><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><msub><mi>X</mi><mn>1</mn></msub><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo stretchy="false" form="postfix">]</mo><mo>∼</mo><mi>𝒩</mi><mo stretchy="false" form="prefix">(</mo><msqrt><mrow><msub><mi>n</mi><mn>2</mn></msub><mi>/</mi><mn>2</mn></mrow></msqrt><mspace width="0.167em"></mspace><mi>θ</mi><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">X_2\,|\,X_1\in[c_1^f, c_1^e]\sim\mathcal{N}(\sqrt{n_2/2}\, \theta, 1)</annotation></semantics></math>.
 In the second stage, the null hypothesis is rejected if and only if
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">X_2 &gt; c_2(X_1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">X_2 &gt; c_2(X_1)</annotation></semantics></math>
 for a stage-two critical value
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo>:</mo><msub><mi>x</mi><mn>1</mn></msub><mo>↦</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2:x_1\mapsto c_2(x_1)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo>:</mo><msub><mi>x</mi><mn>1</mn></msub><mo>↦</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2:x_1\mapsto c_2(x_1)</annotation></semantics></math>.
 To test
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ℋ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\mathcal{H}_0</annotation></semantics></math>
 at a significance level of
@@ -259,20 +259,20 @@ the stage-one critical values
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><annotation encoding="application/x-tex">c_1^e</annotation></semantics></math>
 as well as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 must be chosen in a way that protects the overall maximal type one error
 rate
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>.
 Note that it is convenient to define
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>∞</mi></mrow><annotation encoding="application/x-tex">c_2(x_1) = \infty</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>∞</mi></mrow><annotation encoding="application/x-tex">c_2(x_1) = \infty</annotation></semantics></math>
 if
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>&lt;</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup></mrow><annotation encoding="application/x-tex">x_1&lt;c_1^f</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mi>∞</mi></mrow><annotation encoding="application/x-tex">c_2(x_1) = -\infty</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mi>∞</mi></mrow><annotation encoding="application/x-tex">c_2(x_1) = -\infty</annotation></semantics></math>
 if
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>&gt;</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup></mrow><annotation encoding="application/x-tex">x_1&gt;c_1^e</annotation></semantics></math>
 since the power curve of the design is then given by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>↦</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\theta\mapsto\boldsymbol{Pr}_\theta\big[X_2&gt;c_2(X_1)\big]</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>↦</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\theta\mapsto\boldsymbol{Pr}_\theta\big[X_2&gt;c_2(X_1)\big]</annotation></semantics></math>.
 This results in a classical group-sequential design and several methods
 were proposed in the literature for choosing the early-stopping
 boundaries
@@ -281,13 +281,13 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><annotation encoding="application/x-tex">c_1^e</annotation></semantics></math>
 (<span class="citation">O’Brien and Fleming (1979)</span>, <span class="citation">Pocock (1977)</span>) and for defining the stage-two
 rejection boundary function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 (<span class="citation">Bauer and Köhne (1994)</span>, <span class="citation">Hedges and Olkin (1985)</span>). Often, the
 inverse-normal combination test <span class="citation">(Lehmacher and
 Wassmer 1999)</span> is applied and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 is defined as a linear function of the stage-one test-statistic
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>c</mi><mo>−</mo><msub><mi>w</mi><mn>1</mn></msub><msub><mi>x</mi><mn>1</mn></msub></mrow><msub><mi>w</mi><mn>2</mn></msub></mfrac><mi>‚</mi></mrow><annotation encoding="application/x-tex"> 
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>c</mi><mo>−</mo><msub><mi>w</mi><mn>1</mn></msub><msub><mi>x</mi><mn>1</mn></msub></mrow><msub><mi>w</mi><mn>2</mn></msub></mfrac><mi>‚</mi></mrow><annotation encoding="application/x-tex"> 
   c_2(x_1) = \frac{c - w_1 x_1}{w_2}‚
 </annotation></semantics></math> for a critical value
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
@@ -297,9 +297,9 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>w</mi><mn>2</mn></msub><annotation encoding="application/x-tex">w_2</annotation></semantics></math>.
 Most commonly, the stage-wise test statistics are weighted in terms of
 their respective sample sizes, i.e.,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mn>1</mn></msub><mo>=</mo><msqrt><mrow><msub><mi>n</mi><mn>1</mn></msub><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msqrt></mrow><annotation encoding="application/x-tex">w_1 = \sqrt{n_1 / (n_1+n_2)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mn>1</mn></msub><mo>=</mo><msqrt><mrow><msub><mi>n</mi><mn>1</mn></msub><mi>/</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow></msqrt></mrow><annotation encoding="application/x-tex">w_1 = \sqrt{n_1 / (n_1+n_2)}</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mn>2</mn></msub><mo>=</mo><msqrt><mrow><msub><mi>n</mi><mn>2</mn></msub><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msqrt></mrow><annotation encoding="application/x-tex">w_2 = \sqrt{n_2 / (n_1+n_2)}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mn>2</mn></msub><mo>=</mo><msqrt><mrow><msub><mi>n</mi><mn>2</mn></msub><mi>/</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow></msqrt></mrow><annotation encoding="application/x-tex">w_2 = \sqrt{n_2 / (n_1+n_2)}</annotation></semantics></math>.
 This choice of the weights is optimal in the sense that it minimizes the
 variance of the final test statistic if the assumed sample sizes are
 indeed realized <span class="citation">(Zaykin 2011)</span>. Note,
@@ -308,12 +308,12 @@ size deviates strongly from the anticipated value (cf. <span class="citation">Wa
 natural extension of this group-sequential framework is to allow the
 second stage sample size to also depend on the observed interim outcome,
 i.e., to consider a function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mo>:</mo><msub><mi>x</mi><mn>1</mn></msub><mo>↦</mo><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">n_2:x_1\mapsto n_2(x_1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mo>:</mo><msub><mi>x</mi><mn>1</mn></msub><mo>↦</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n_2:x_1\mapsto n_2(x_1)</annotation></semantics></math>
 instead of a fixed value
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mn>2</mn></msub><annotation encoding="application/x-tex">n_2</annotation></semantics></math>.
 Such ‘adaptive’ two-stage designs are thus completely characterized by a
 five-tuple
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mo>:=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{D}:=\big(n_1, c_1^f, c_1^e, n_2(\cdot), c_2(\cdot)\big)</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒟</mi><mo>:=</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{D}:=\big(n_1, c_1^f, c_1^e, n_2(\cdot), c_2(\cdot)\big)</annotation></semantics></math>.</p>
 <p>While the required sample size and the critical value for a
 single-stage design are uniquely defined by given type one error rate
 and power constraints, it is much less clear how the design parameters
@@ -333,7 +333,7 @@ design. For instance, conditional power is defined as the probability to
 reject the null hypothesis under the alternative given the interim
 result
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">X_1=x_1</annotation></semantics></math>:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>CP</mo><mi>θ</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi mathvariant="normal">CP</mi><mo>⁡</mo></mrow><mi>θ</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>:=</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">|</mo><mspace width="0.167em"></mspace><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{CP}_\theta(x_1) := \boldsymbol{Pr}_\theta \big[X_2 &gt; c_2(X_1) \, \big| \, X_1=x_1\big].
 </annotation></semantics></math> Hence, conditional power is a
 conditional score given as the power conditioned on the first-stage
@@ -342,7 +342,7 @@ outcome
 <em>Vice versa</em>, power can be seen as an unconditional score that is
 obtained by integrating conditional power over all possible stage-one
 outcomes, i.e.,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">P</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">w</mi><mi mathvariant="normal">e</mi><msub><mi mathvariant="normal">r</mi><mi mathvariant="normal">θ</mi></msub></mrow><mo>=</mo><msub><mi>𝐄</mi><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><mo>CP</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">P</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">w</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><msub><mi mathvariant="normal"></mi><mi mathvariant="normal">θ</mi></msub></mrow><mo>=</mo><msub><mi>𝐄</mi><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><mrow><mi mathvariant="normal">CP</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{Power_\theta} = \boldsymbol{E}_\theta\big[\operatorname{CP}(X_1)\big].
 </annotation></semantics></math> Intuitively, it makes sense to require
 a minimal conditional power upon continuation to the second stage since
@@ -353,40 +353,40 @@ scoring criterion is selected, the design parameters may be chosen in
 order to optimize this objective. The first ones to address this problem
 were <span class="citation">Jennison and Turnbull (2015)</span> who
 minimized the expected sample size
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">ESS</mtext><mi>θ</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><msub><mi>𝐄</mi><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo><mo>:=</mo><msub><mi>𝐄</mi><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">ESS</mtext><mi>θ</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo><mo>:=</mo><msub><mi>𝐄</mi><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><mi>n</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo><mo>:=</mo><msub><mi>𝐄</mi><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
 \text{ESS}_{\theta}(\mathcal{D}) := \boldsymbol{E}_{\theta} \big[n(X_1) \big] :=
 \boldsymbol{E}_{\theta} \big[n_1 + n_2(X_1) \big]
 </annotation></semantics></math> of a two-stage design for given
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup></mrow><annotation encoding="application/x-tex">n_1,c_1^f, c_1^e</annotation></semantics></math>
 with respect to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">n_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n_2(\cdot)</annotation></semantics></math>
 for given power and type one error rate constraints. The function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>,
 however, was not optimized. Instead, <span class="citation">Jennison and
 Turnbull (2015)</span> used the inverse-normal combination test approach
 to derive
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>2</mn></msub><annotation encoding="application/x-tex">c_2</annotation></semantics></math>
 given
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">n_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n_2(\cdot)</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mn>1</mn></msub><annotation encoding="application/x-tex">n_1</annotation></semantics></math>.
 In <span class="citation">Pilz et al. (2019)</span>, the authors
 demonstrated that this restriction is not necessary and that the
 variational problem of deriving both functions
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">n_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n_2(\cdot)</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 given
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup></mrow><annotation encoding="application/x-tex">n_1,c_1^f, c_1^e</annotation></semantics></math>
 to minimize expected sample size can be solved by analyzing the
 corresponding Euler-Lagrange equation. Nesting this step in a standard
 optimization over the stage-one parameters allows identifying an optimal
 set of all design parameters without imposing parametric assumptions on
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>.
 As a result, a fully optimal design
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝒟</mi><mo>*</mo></msup><mo>:=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mi>n</mi><mn>1</mn><mo>*</mo></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mrow><mi>f</mi><mo>,</mo><mo>*</mo></mrow></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mrow><mi>e</mi><mo>,</mo><mo>*</mo></mrow></msubsup><mo>,</mo><msubsup><mi>n</mi><mn>2</mn><mo>*</mo></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><msubsup><mi>c</mi><mn>2</mn><mo>*</mo></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{D}^*:=\big(n_1^*, c_1^{f,*}, c_1^{e, *}, n_2^*(\cdot), c_2^*(\cdot)\big)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝒟</mi><mo>*</mo></msup><mo>:=</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msubsup><mi>n</mi><mn>1</mn><mo>*</mo></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mrow><mi>f</mi><mo>,</mo><mi>*</mi></mrow></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mrow><mi>e</mi><mo>,</mo><mi>*</mi></mrow></msubsup><mo>,</mo><msubsup><mi>n</mi><mn>2</mn><mo>*</mo></msubsup><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><msubsup><mi>c</mi><mn>2</mn><mo>*</mo></msubsup><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{D}^*:=\big(n_1^*, c_1^{f,*}, c_1^{e, *}, n_2^*(\cdot), c_2^*(\cdot)\big)</annotation></semantics></math>
 for the following general optimization problem was derived
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">minimize</mtext></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><msub><mo>ESS</mo><msub><mi>θ</mi><mn>1</mn></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">subject to:</mtext></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><msub><mi>θ</mi><mn>0</mn></msub></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mo>≤</mo><mi>α</mi><mo>,</mo></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><msub><mi>θ</mi><mn>1</mn></msub></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mo>≥</mo><mn>1</mn><mo>−</mo><mi>β</mi></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"></mtd><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mtext mathvariant="normal">minimize</mtext></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><msub><mrow><mi mathvariant="normal">ESS</mi><mo>⁡</mo></mrow><msub><mi>θ</mi><mn>1</mn></msub></msub><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mtext mathvariant="normal">subject to:</mtext></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><msub><mi>θ</mi><mn>0</mn></msub></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≤</mo><mi>α</mi><mo>,</mo></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><msub><mi>θ</mi><mn>1</mn></msub></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≥</mo><mn>1</mn><mo>−</mo><mi>β</mi></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
 &amp; \text{minimize} &amp;&amp; \operatorname{ESS}_{\theta_1}(\mathcal{D}) &amp;&amp;&amp;&amp; \\
 &amp; \text{subject to:}
 &amp;&amp; \boldsymbol{Pr}_{\theta_0}\big[X_2&gt;c_2(X_1)\big] &amp;&amp;\leq \alpha, &amp;&amp;&amp;&amp; \\
@@ -405,7 +405,7 @@ and stage-two design parameters simultaneously using standard numerical
 libraries. I.e., we adopt a <em>direct</em> approach to solving the
 variational problem. This is done by defining a discrete set of pivot
 points
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo>∈</mo><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">\widetilde{x}_1^{(i)}\in(c_1^f, c_1^e), i=1,\ldots,k</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo>∈</mo><mo stretchy="false" form="prefix">(</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">\widetilde{x}_1^{(i)}\in(c_1^f, c_1^e), i=1,\ldots,k</annotation></semantics></math>,
 and interpolating
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>2</mn></msub><annotation encoding="application/x-tex">c_2</annotation></semantics></math>
 and
@@ -427,7 +427,7 @@ nodes of a Gaussian quadrature rule of degree
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>.
 This choice allows fast and precise numerical integration of any
 conditional score over the continuation region, e.g.,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><msub><mtext mathvariant="normal">ESS</mtext><mi>θ</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>∫</mo><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>f</mi><mi>θ</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>d</mo><msub><mi>x</mi><mn>1</mn></msub><mo>≈</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover><msub><mi>ω</mi><mi>i</mi></msub><mspace width="0.167em"></mspace><msub><mi>n</mi><mn>2</mn></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><msub><mi>f</mi><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align} 
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><msub><mtext mathvariant="normal">ESS</mtext><mi>θ</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo>∫</mo><mi>n</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><msub><mi>f</mi><mi>θ</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mrow><mi mathvariant="normal">d</mi><mo>⁡</mo></mrow><msub><mi>x</mi><mn>1</mn></msub><mo>≈</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover><msub><mi>ω</mi><mi>i</mi></msub><mspace width="0.167em"></mspace><msub><mi>n</mi><mn>2</mn></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><msub><mi>f</mi><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align} 
 \text{ESS}_{\theta}(\mathcal{D})  =
 \int n(x_1) f_{\theta} (x_1) \operatorname{d} x_1
 \approx n_1 + \sum_{i=1}^{k} \omega_i\, n_2\big(\widetilde{x}_1^{(i)}\big) f_{\theta}
@@ -446,20 +446,20 @@ Consequentially, this objective function is smooth in the optimization
 parameters and the resulting optimization problem is of dimension
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>k</mi><mo>+</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">2k+3</annotation></semantics></math>,
 where the tuning parameters are
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mi>k</mi><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\big(n_1, c_1^f, c_1^e, n_2\big(\widetilde{x}_1^{(1)}\big),
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mn>1</mn></msub><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>n</mi><mn>2</mn></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>c</mi><mn>2</mn></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msubsup><mover><mi>x</mi><mo accent="true">̃</mo></mover><mn>1</mn><mrow><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\big(n_1, c_1^f, c_1^e, n_2\big(\widetilde{x}_1^{(1)}\big),
 \dots, n_2\big(\widetilde{x}_1^{(k)}\big), c_2\big(\widetilde{x}_1^{(1)}\big),
 \dots, c_2\big(\widetilde{x}_1^{(k)}\big)\big)</annotation></semantics></math>.
 Standard numerical solvers may then be employed to minimize it. Since
 <strong>adoptr</strong> enables generic objectives (cf. Section <a href="#sec:utility_maximization">6.3</a>), it uses the gradient-free
 optimizer COBYLA <span class="citation">(Powell 1994)</span> internally
-via the <strong>R</strong>-package <strong>nloptr</strong> (<span class="citation">Johnson (2018)</span>, <span class="citation">Ypma,
-Borchers, and Eddelbuettel (2018)</span>).</p>
+via the <strong>R</strong>-package <strong>nloptr</strong> (<span class="citation">Johnson (2018)</span>, <span class="citation">Ypma et
+al. (2018)</span>).</p>
 <p>Most commonly used unconditional performance scores
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">S(\mathcal{D})</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">S(\mathcal{D})</annotation></semantics></math>
 can be seen as expected values over conditional scores
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">S(\mathcal{D}|X_1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">S(\mathcal{D}|X_1)</annotation></semantics></math>
 by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>𝐄</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">S(\mathcal{D}) = \boldsymbol{E}\big[S(\mathcal{D}|X_1)\big]</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>𝐄</mi><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">S(\mathcal{D}) = \boldsymbol{E}\big[S(\mathcal{D}|X_1)\big]</annotation></semantics></math>
 in a similar way as power and expected sample size. Any such ‘integral
 score’ can be computed quickly and reliably in <strong>adoptr</strong>
 via the choice of pivots outlined above. The correctness of numerically
@@ -493,29 +493,27 @@ from this, even for small trials where the rounding error is largest
 statistical software for adaptive designs ‘is increasingly needed to
 evaluate the adaptations and to find reasonable strategies’.</p>
 <p>Commercial software such as JMP <span class="citation">(SAS Institute
-Inc., n.d.a)</span> or Minitab <span class="citation">(Minitab, Inc.
+Inc., n.d.-a)</span> or Minitab <span class="citation">(Minitab, Inc.
 2020)</span> allow planning and analyzing a wide range of experimental
 setups. Amongst others, they provide tools for randomization,
 stratification, block-building, or D-optimal designs. These general
 purpose statistical software packages do not, however, allow planning of
 more specialized multi-stage designs encountered in clinical trials. For
 group-sequential designs, some planning capabilities are available in
-the <strong>SAS</strong> procedure <code>seqdesign</code> <span class="citation">(SAS Institute Inc., n.d.b)</span>, PASS <span class="citation">(NCSS 2019)</span>, or ADDPLAN <span class="citation">(ICON plc 2020)</span>. East <span class="citation">(Cytel 2020)</span> also supports design, simulation
+the <strong>SAS</strong> procedure <code>seqdesign</code> <span class="citation">(SAS Institute Inc., n.d.-b)</span>, PASS <span class="citation">(NCSS 2019)</span>, or ADDPLAN <span class="citation">(ICON plc 2020)</span>. East <span class="citation">(Cytel 2020)</span> also supports design, simulation
 and analysis of experiments with interim analyses. The East ADAPT and
 the East SURVADAPT modules support sample size recalculation.
 Furthermore, there are various open-source <strong>R</strong>-packages
 for the analysis of multi-stage designs. The package
 <strong>adaptTest</strong> <span class="citation">(Vandemeulebroecke
 2009)</span> implements combination tests for adaptive two-stage
-designs. <strong>AGSDest</strong> <span class="citation">(Hack,
-Brannath, and Brueckner 2019)</span> allows estimation and computation
-of confidence intervals in adaptive group-sequential designs. More
-detailed overviews on software for adaptive clinical trial designs can
-be found in <span class="citation">Bauer et al. (2015)</span>, chapter
-6, or in <span class="citation">Tymofyeyev (2014)</span>. The choice of
-software for optimally designing two- or multi-stage designs, however,
-is much more limited. Current <strong>R</strong>-packages concerned with
-optimal clinical trial designs are <strong>OptGS</strong> (<span class="citation">Wason and Burkardt (2015)</span>, <span class="citation">Wason (2015)</span>) and <strong>rpact</strong> <span class="citation">(Wassmer and Pahlke 2019)</span>. These are, however,
+designs. <strong>AGSDest</strong> <span class="citation">(Hack et al.
+2019)</span> allows estimation and computation of confidence intervals
+in adaptive group-sequential designs. More detailed overviews on
+software for adaptive clinical trial designs can be found in <span class="citation">Bauer et al. (2015)</span>, chapter 6, or in <span class="citation">Tymofyeyev (2014)</span>. The choice of software for
+optimally designing two- or multi-stage designs, however, is much more
+limited. Current <strong>R</strong>-packages concerned with optimal
+clinical trial designs are <strong>OptGS</strong> (<span class="citation">Wason and Burkardt (2015)</span>, <span class="citation">Wason (2015)</span>) and <strong>rpact</strong> <span class="citation">(Wassmer and Pahlke 2019)</span>. These are, however,
 exclusively focused on group-sequential designs and lack the ability to
 specify custom objective functions and constraints.</p>
 <p>The lack of flexibility in formulating the objective function and
@@ -591,9 +589,9 @@ scores, this method only requires a <code>Score</code> object and a
 conditional power), it also requires the interim outcome
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math>.
 Note that any <code>ConditionalScore</code>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">S(\mathcal{D}|X_1=x_1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">S(\mathcal{D}|X_1=x_1)</annotation></semantics></math>
 can be converted to an <code>UnconditionalScore</code>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>𝐄</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">S(\mathcal{D}) = \boldsymbol{E}\big[S(\mathcal{D}|X_1)\big]</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>𝐄</mi><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">S(\mathcal{D}) = \boldsymbol{E}\big[S(\mathcal{D}|X_1)\big]</annotation></semantics></math>
 using the method <code>expected</code>. The two most widely used
 conditional scores are pre-implemented as <code>ConditionalPower</code>
 and <code>ConditionalSampleSize</code>. Their unconditional counterparts
@@ -620,7 +618,7 @@ and a sample size function that varies with the interim test statistic.
 Another option is the subclass <code>GroupSequentialDesign</code> which
 restricts the sample size function on the continuation region to a
 single number, i.e.,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>n</mi><mn>2</mn></msub><mspace width="0.222em"></mspace><mo>∀</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mspace width="0.167em"></mspace><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">{n_2(x_1) = n_2\ \forall x_1\in[\,c_1^f, c_1^e\,]}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>n</mi><mn>2</mn></msub><mspace width="0.222em"></mspace><mo>∀</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><mspace width="0.167em"></mspace><msubsup><mi>c</mi><mn>1</mn><mi>f</mi></msubsup><mo>,</mo><msubsup><mi>c</mi><mn>1</mn><mi>e</mi></msubsup><mspace width="0.167em"></mspace><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">{n_2(x_1) = n_2\ \forall x_1\in[\,c_1^f, c_1^e\,]}</annotation></semantics></math>.
 Additionally, <strong>adoptr</strong> supports the computation of
 optimal <code>OneStageDesign</code>s, i.e., designs without an interim
 analysis. Technically, one-stage designs are implemented as subclasses
@@ -721,9 +719,9 @@ object directly via</p>
 <pre class="text"><code><span><span class="va">R</span><span class="op">&gt;</span> <span class="fu"><a href="../reference/Scores.html">evaluate</a></span><span class="op">(</span><span class="va">toer</span>  <span class="op">&lt;=</span> <span class="fl">.025</span>, <span class="va">initial_design</span><span class="op">)</span></span>
 <span><span class="va">R</span><span class="op">&gt;</span> <span class="fu"><a href="../reference/Scores.html">evaluate</a></span><span class="op">(</span><span class="va">power</span> <span class="op">&gt;=</span> <span class="fl">.9</span>, <span class="va">initial_design</span><span class="op">)</span></span></code></pre>
 <p>All constraint objects are normalized to the form
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h(\mathcal{D}) \leq 0</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h(\mathcal{D}) \leq 0</annotation></semantics></math>
 (unconditional) or
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h(\mathcal{D}, x_1) \leq 0</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>≤</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h(\mathcal{D}, x_1) \leq 0</annotation></semantics></math>
 (conditional on
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">X_1=x_1</annotation></semantics></math>).
 Calling <code>evaluate</code> on a constraint object then simply returns
@@ -759,12 +757,12 @@ and the respective function on the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>-axis.</p>
 <pre class="text"><code><span><span class="va">R</span><span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">opt1</span><span class="op">$</span><span class="va">design</span>, `Conditional power` <span class="op">=</span> <span class="va">cp</span><span class="op">)</span></span></code></pre>
 <p>Note the slightly bent shape of the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 function. For two-stage designs based on the inverse-normal combination
 function,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 would be linear by definition. Since the optimal shape of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 is not linear (but almost), inverse-normal combination methods are
 slightly less efficient (cf. <span class="citation">Pilz et al.
 (2019)</span> for a more detailed discussion of this issue).</p>
@@ -781,7 +779,7 @@ mean
 and standard deviation
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.1</mn><annotation encoding="application/x-tex">0.1</annotation></semantics></math>,
 i.e.,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>∼</mo><msub><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">[</mo><mo>−</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.3</mn><mo>,</mo><msup><mn>0.1</mn><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\theta\sim\mathcal{N}_{[-1, 1]}(0.3, 0.1^2)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>∼</mo><msub><mi>𝒩</mi><mrow><mo stretchy="false" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow></msub><mo stretchy="false" form="prefix">(</mo><mn>0.3</mn><mo>,</mo><msup><mn>0.1</mn><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\theta\sim\mathcal{N}_{[-1, 1]}(0.3, 0.1^2)</annotation></semantics></math>.
 The order of integration is set to 25 to obtain precise results.</p>
 <pre class="text"><code>R&gt; prior &lt;- ContinuousPrior(
 +    pdf     = function(theta) dnorm(theta, mean = .3, sd = .1),
@@ -791,7 +789,7 @@ The order of integration is set to 25 to obtain precise results.</p>
 prior</p>
 <pre class="text"><code><span><span class="va">R</span><span class="op">&gt;</span> <span class="va">ess</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConditionalSampleSize-class.html">ExpectedSampleSize</a></span><span class="op">(</span>dist <span class="op">=</span> <span class="va">datadist</span>, prior <span class="op">=</span> <span class="va">prior</span><span class="op">)</span></span></code></pre>
 <p>and we replace power with expected power
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐄</mi><mo minsize="1.8" maxsize="1.8" stretchy="false" form="prefix">[</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo><mspace width="0.167em"></mspace><mo minsize="1.8" maxsize="1.8" stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><mi>θ</mi><mo>≥</mo><mn>0.1</mn><mo minsize="1.8" maxsize="1.8" stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐄</mi><mo minsize="180%" maxsize="180%" stretchy="true" form="prefix">[</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo><mspace width="0.167em"></mspace><mo minsize="180%" maxsize="180%" stretchy="true" form="prefix">|</mo><mspace width="0.167em"></mspace><mi>θ</mi><mo>≥</mo><mn>0.1</mn><mo minsize="180%" maxsize="180%" stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
 \boldsymbol{E} \Big[
 \boldsymbol{Pr}_\theta\big[X_2&gt;c_2(X_1)\big] \, \Big| \, \theta \geq 0.1 \Big]
 </annotation></semantics></math> which is the expected power given a
@@ -831,7 +829,7 @@ function combining both expected power and expected sample size instead
 of imposing a hard constraint on expected power. For example, in the
 above situation one could be interested in a utility-maximizing design.
 Here, we consider the utility function
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mn>200000</mn><mspace width="0.167em"></mspace><mi>𝐄</mi><mo minsize="1.8" maxsize="1.8" stretchy="false" form="prefix">[</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo><mspace width="0.167em"></mspace><mo minsize="1.8" maxsize="1.8" stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><mi>θ</mi><mo>≥</mo><mn>0.1</mn><mo minsize="1.8" maxsize="1.8" stretchy="false" form="postfix">]</mo><mo>−</mo><mi>𝐄</mi><mo minsize="1.8" maxsize="1.8" stretchy="false" form="prefix">[</mo><mi>n</mi><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo minsize="1.8" maxsize="1.8" stretchy="false" form="postfix">]</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo><mo>:=</mo><mn>200000</mn><mspace width="0.167em"></mspace><mi>𝐄</mi><mo minsize="180%" maxsize="180%" stretchy="true" form="prefix">[</mo><msub><mrow><mi>𝐏</mi><mi>𝐫</mi></mrow><mi>θ</mi></msub><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><msub><mi>X</mi><mn>2</mn></msub><mo>&gt;</mo><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo><mspace width="0.167em"></mspace><mo minsize="180%" maxsize="180%" stretchy="true" form="prefix">|</mo><mspace width="0.167em"></mspace><mi>θ</mi><mo>≥</mo><mn>0.1</mn><mo minsize="180%" maxsize="180%" stretchy="true" form="postfix">]</mo><mo>−</mo><mi>𝐄</mi><mo minsize="180%" maxsize="180%" stretchy="true" form="prefix">[</mo><mi>n</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo minsize="180%" maxsize="180%" stretchy="true" form="postfix">]</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 u(\mathcal{D}) := 200000\, \boldsymbol{E} \Big[
 \boldsymbol{Pr}_\theta\big[X_2&gt;c_2(X_1)\big] \, \Big| \, \theta \geq 0.1 \Big] - \boldsymbol{E}\Big[n(X_1)^2\Big],
 </annotation></semantics></math> thus allowing a direct trade-off
@@ -844,16 +842,16 @@ part of the utility function which allows a direct trade-off between the
 two quantities. This can be interpreted as a pricing mechanism (cf.
 <span class="citation">Kunzmann and Kieser (2020)</span>): Every
 additional percent point of expected power has a (positive) value of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>$</mi><mn>2</mn><mi>′</mi><mn>000</mn></mrow><annotation encoding="application/x-tex">\$ 2'000</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>$</mi><msup><mn>2</mn><mo>′</mo></msup><mn>000</mn></mrow><annotation encoding="application/x-tex">\$ 2'000</annotation></semantics></math>
 while an increase of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐄</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><mi>n</mi><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\boldsymbol{E}\big[n(X_1)^2\big]</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐄</mi><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">[</mo><mi>n</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\boldsymbol{E}\big[n(X_1)^2\big]</annotation></semantics></math>
 by
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
 incurs costs of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>$</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">\$ 1</annotation></semantics></math>.
 The goal is then to compute the design which is maximizing the overall
 utility defined by the utility function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">u(\mathcal{D})</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">u(\mathcal{D})</annotation></semantics></math>
 (or equivalently minimize costs).</p>
 <p>A composite score can be defined via any valid numerical
 <strong>R</strong> expression of score objects. We start by defining a
@@ -873,9 +871,9 @@ depicted in a joint plot. The design using the continuous prior requires
 higher sample sizes due to the higher uncertainty about
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>.
 The utility maximization approach results in similar shapes of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">n(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">n(\cdot)</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">c_2(\cdot)</annotation></semantics></math>
 as the constraint optimization. However, the sample sizes are lower due
 to the design’s lower power which is only possible by allowing a
 trade-off between expected power and expected sample size. In
@@ -988,11 +986,10 @@ implemented and tested in the (public) development version on GitHub
 before pushing new releases to CRAN.</li>
 <li>
 <em>Unit testing:</em> <strong>adoptr</strong> implements an
-extensive test suite using the package <strong>testthat</strong> (<span class="citation">H. Wickham, R Studio, and R Core Team (2018)</span>,
-<span class="citation">H. Wickham (2011)</span>) which allows spotting
-new errors early during development and localizing them quickly.
-Together with continuous integration (cf. below), this helps to improve
-quality and speeds up the development process.</li>
+extensive test suite using the package <strong>testthat</strong> (<span class="citation">Wickham et al. (2018)</span>, <span class="citation">Wickham (2011)</span>) which allows spotting new errors
+early during development and localizing them quickly. Together with
+continuous integration (cf. below), this helps to improve quality and
+speeds up the development process.</li>
 <li>
 <em>Continuous Integration / Continuous Deployment:</em>
 <strong>adoptr</strong> makes extensive use of the continuous
@@ -1012,15 +1009,13 @@ proportion of lines visited at least once during testing (currently
 100%) and enables easy online publication of the results.</li>
 <li>
 <em>Online documentation:</em> Beyond the standard documentation
-generated using <strong>roxygen2</strong> <span class="citation">(Hadley
-Wickham et al. 2019)</span>, we also make use of the
-<strong>pkgdown</strong> <span class="citation">(H. Wickham and
-Hesselberth 2019)</span> package and the free GitHub pages service to
-publish a static <strong>html</strong> version of the documentation
-online at <a href="https://optad.github.io/adoptr/" class="uri">https://optad.github.io/adoptr/</a>. This includes both the
+generated using <strong>roxygen2</strong> <span class="citation">(Wickham et al. 2019)</span>, we also make use of the
+<strong>pkgdown</strong> <span class="citation">(Wickham and Hesselberth
+2019)</span> package and the free GitHub pages service to publish a
+static <strong>html</strong> version of the documentation online at <a href="https://optad.github.io/adoptr/" class="uri">https://optad.github.io/adoptr/</a>. This includes both the
 function reference and the vignettes in a consistent and easily
 accessible format. The online documentation experience is further
-improved by the integration of a full-text docsearch engine (<a href="https://www.algolia.com/ref/docsearch" class="external-link uri">https://www.algolia.com/ref/docsearch</a>).</li>
+improved by the integration of a full-text docsearch engine (<a href="https://www.algolia.com/developers" class="external-link uri">https://www.algolia.com/developers</a>).</li>
 <li>
 <em>Extended validation report:</em> There are limits to what can be
 done in the standard unit testing framework within a package itself
@@ -1086,7 +1081,7 @@ under Grant number KI 708/4-1.</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Bauer2015" class="csl-entry">
 Bauer, P., F. Bretz, V. Dragalin, F. König, and G. Wassmer. 2015.
 <span>“Twenty-Five Years of Confirmatory Adaptive Designs: Opportunities
@@ -1114,7 +1109,7 @@ EMEA</em>. <a href="https://www.ema.europa.eu/en/methodological-issues-confirmat
 CRAN. 2020. <em>Comprehensive r Archive Network</em>. <a href="https://cran.r-project.org/" class="external-link">https://cran.r-project.org/</a>.
 </div>
 <div id="ref-east2020" class="csl-entry">
-Cytel. 2020. <em>East<sup></sup> 6</em>. <a href="https://www.cytel.com/software/east/" class="external-link">https://www.cytel.com/software/east/</a>.
+Cytel. 2020. <em>East<sup>®</sup> 6</em>. <a href="https://www.cytel.com/software/east/" class="external-link">https://www.cytel.com/software/east/</a>.
 </div>
 <div id="ref-Englert2013" class="csl-entry">
 Englert, S., and M. Kieser. 2013. <span>“Optimal Adaptive Two-Stage
@@ -1141,12 +1136,12 @@ Meta-Analysis</em>. Academic Press.
 Hester, Jim. 2019. <em>Covr: Test Coverage for Packages</em>. <a href="https://CRAN.R-project.org/package=covr" class="external-link">https://CRAN.R-project.org/package=covr</a>.
 </div>
 <div id="ref-addplan2020" class="csl-entry">
-ICON plc. 2020. <em>ADDPLAN<sup></sup></em>.
+ICON plc. 2020. <em>ADDPLAN<sup>®</sup></em>.
 </div>
 <div id="ref-JT2015" class="csl-entry">
 Jennison, C., and B. W. Turnbull. 2015. <span>“Adaptive Sample Size
 Modification in Clinical Trials: Start Small Then Ask for More?”</span>
-<em>Statistics in Medicine</em> 34 (29): 3793–3810. <a href="https://doi.org/10.1002/sim.6575" class="external-link">https://doi.org/10.1002/sim.6575</a>.
+<em>Statistics in Medicine</em> 34 (29): 3793–810. <a href="https://doi.org/10.1002/sim.6575" class="external-link">https://doi.org/10.1002/sim.6575</a>.
 </div>
 <div id="ref-nlopt" class="csl-entry">
 Johnson, S. G. 2018. <em>The NLopt Nonlinear-Optimization Package</em>.
@@ -1158,9 +1153,9 @@ Designs for Single-Arm Trial with Binary Endpoint.”</span>
 <em>arXiv</em>, 1605.00249.
 </div>
 <div id="ref-Kunzmann2019" class="csl-entry">
-———. 2020. <span>“Optimal Adaptive Single-Arm Phase II Trials Under
-Quantified Uncertainty.”</span> <em>Journal of Biopharmaceutical
-Statistics</em> 30 (1): 89–103. <a href="https://doi.org/10.1080/10543406.2019.1609016" class="external-link">https://doi.org/10.1080/10543406.2019.1609016</a>.
+Kunzmann, K., and M. Kieser. 2020. <span>“Optimal Adaptive Single-Arm
+Phase II Trials Under Quantified Uncertainty.”</span> <em>Journal of
+Biopharmaceutical Statistics</em> 30 (1): 89–103. <a href="https://doi.org/10.1080/10543406.2019.1609016" class="external-link">https://doi.org/10.1080/10543406.2019.1609016</a>.
 </div>
 <div id="ref-new-scores" class="csl-entry">
 Kunzmann, K., and M. Pilz. 2020. <em>Defining New Scores</em>. <a href="https://rdrr.io/cran/adoptr/f/vignettes/defining-new-scores.Rmd" class="external-link">https://rdrr.io/cran/adoptr/f/vignettes/defining-new-scores.Rmd</a>.
@@ -1182,10 +1177,10 @@ Examples.”</span> <em>Statistics in Medicine</em> 30 (28): 3267–84. <a href=
 </div>
 <div id="ref-minitab2020" class="csl-entry">
 Minitab, Inc. 2020. <em>Minitab 19 Statistical Software
-<sup></sup></em>. <a href="https://www.minitab.com" class="external-link">https://www.minitab.com</a>.
+<sup>®</sup></em>. <a href="https://www.minitab.com" class="external-link">https://www.minitab.com</a>.
 </div>
 <div id="ref-pass2019" class="csl-entry">
-NCSS. 2019. <em>PASS Sample Size 2019 <sup></sup></em>. <a href="https://www.ncss.com/software/pass/" class="external-link">https://www.ncss.com/software/pass/</a>.
+NCSS. 2019. <em>PASS Sample Size 2019 <sup>®</sup></em>. <a href="https://www.ncss.com/software/pass/" class="external-link">https://www.ncss.com/software/pass/</a>.
 </div>
 <div id="ref-OBF" class="csl-entry">
 O’Brien, P. C., and T. R. Fleming. 1979. <span>“A Multiple Testing
@@ -1206,33 +1201,34 @@ Analysis of Clinical Trials.”</span> <em>Biometrika</em> 64 (2): 191–99.
 Powell, M. J. D. 1994. <span>“A Direct Search Optimization Method That
 Models the Objective and Constraint Functions by Linear
 Interpolation.”</span> In <em>Advances in Optimization and Numerical
-Analysis</em>, 51–67. Dordrecht: Springer-Verlag Netherlands. <a href="https://doi.org/10.1007/978-94-015-8330-5_4" class="external-link">https://doi.org/10.1007/978-94-015-8330-5_4</a>.
+Analysis</em>. Springer-Verlag Netherlands. <a href="https://doi.org/10.1007/978-94-015-8330-5_4" class="external-link">https://doi.org/10.1007/978-94-015-8330-5_4</a>.
 </div>
 <div id="ref-R" class="csl-entry">
 R Core Team. 2019. <em>R: A Language and Environment for Statistical
-Computing</em>. Vienna, Austria: The R Foundation for Statistical
-Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
+Computing</em>. The R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
 </div>
 <div id="ref-jmp2020" class="csl-entry">
-SAS Institute Inc., NC, Cary. n.d.a. <em>JMP Clinical <sup></sup></em>.
+SAS Institute Inc., NC, Cary. n.d.-a. <em>JMP Clinical
+<sup>®</sup></em>.
 </div>
 <div id="ref-sas2020" class="csl-entry">
-———. n.d.b. <em>SAS<sup></sup></em>.
+SAS Institute Inc., NC, Cary. n.d.-b. <em>SAS<sup>®</sup></em>.
 </div>
 <div id="ref-r-fda" class="csl-entry">
-The R Foundation for Statistical Computing. 2013. <span>“R: Regulatory
+The R Foundation for Statistical Computing. 2013. <em>R: Regulatory
 Compliance and Validation Issues - a Guidance Document for the Use of r
-in Regulated Clinical Trial Environments.”</span> <a href="https://www.r-project.org/doc/R-FDA.pdf" class="external-link">https://www.r-project.org/doc/R-FDA.pdf</a>.
+in Regulated Clinical Trial Environments</em>. <a href="https://www.r-project.org/doc/R-FDA.pdf" class="external-link">https://www.r-project.org/doc/R-FDA.pdf</a>.
 </div>
 <div id="ref-Tymofyeyev2014" class="csl-entry">
 Tymofyeyev, Y. 2014. <span>“A Review of Available Software and
 Capabilities for Adaptive Designs.”</span> In <em>Practical
-Considerations for Adaptive Trial Design and Implementation</em>,
-139–55. Springer-Verlag New York. <a href="https://doi.org/10.1007/978-1-4939-1100-4_8" class="external-link">https://doi.org/10.1007/978-1-4939-1100-4_8</a>.
+Considerations for Adaptive Trial Design and Implementation</em>.
+Springer-Verlag New York. <a href="https://doi.org/10.1007/978-1-4939-1100-4_8" class="external-link">https://doi.org/10.1007/978-1-4939-1100-4_8</a>.
 </div>
 <div id="ref-FDA" class="csl-entry">
-US Food and Drug Administration et al. 2019. <em>Adaptive Designs for
-Clinical Trials of Drugs and Biologics - Guidance for Industry</em>. <a href="https://www.fda.gov/media/78495/download" class="external-link">https://www.fda.gov/media/78495/download</a>.
+<span class="nocase">US Food and Drug Administration et al.</span> 2019.
+<em>Adaptive Designs for Clinical Trials of Drugs and Biologics -
+Guidance for Industry</em>. <a href="https://www.fda.gov/media/78495/download" class="external-link">https://www.fda.gov/media/78495/download</a>.
 </div>
 <div id="ref-crf11" class="csl-entry">
 US Food and Drug Administration and others. 2003. <span>“Guidance for
@@ -1280,11 +1276,11 @@ for r</em>. <a href="https://CRAN.R-project.org/package=testthat" class="externa
 </div>
 <div id="ref-bookdown_pub" class="csl-entry">
 Xie, Y. 2016. <em>Bookdown: Authoring Books and Technical Documents with
-r Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://doi.org/10.1201/9781315204963" class="external-link">https://doi.org/10.1201/9781315204963</a>.
+r Markdown</em>. Chapman; Hall/CRC. <a href="https://doi.org/10.1201/9781315204963" class="external-link">https://doi.org/10.1201/9781315204963</a>.
 </div>
 <div id="ref-bookdown" class="csl-entry">
-———. 2019. <em>Bookdown: Authoring Books and Technical Documents with r
-Markdown</em>. <a href="https://github.com/rstudio/bookdown" class="external-link">https://github.com/rstudio/bookdown</a>.
+Xie, Y. 2019. <em>Bookdown: Authoring Books and Technical Documents with
+r Markdown</em>. <a href="https://github.com/rstudio/bookdown" class="external-link">https://github.com/rstudio/bookdown</a>.
 </div>
 <div id="ref-nloptr" class="csl-entry">
 Ypma, J., H. W. Borchers, and D. Eddelbuettel. 2018. <em>Nloptr: R
@@ -1308,7 +1304,7 @@ of Evolutionary Biology</em> 24 (8): 1836–41. <a href="https://doi.org/10.1111
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

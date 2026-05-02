@@ -1,0 +1,205 @@
+# Package index
+
+## All functions
+
+- [`ANOVA()`](https://optad.github.io/adoptr/reference/ANOVA-class.md)
+  [`get_tau_ANOVA()`](https://optad.github.io/adoptr/reference/ANOVA-class.md)
+  : Analysis of Variance
+
+- [`AverageN2()`](https://optad.github.io/adoptr/reference/AverageN2-class.md)
+  [`evaluate(`*`<AverageN2>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/AverageN2-class.md)
+  : Regularization via L1 norm
+
+- [`Binomial()`](https://optad.github.io/adoptr/reference/BinomialDataDistribution-class.md)
+  [`quantile(`*`<Binomial>`*`)`](https://optad.github.io/adoptr/reference/BinomialDataDistribution-class.md)
+  [`simulate(`*`<Binomial>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/BinomialDataDistribution-class.md)
+  : Binomial data distribution
+
+- [`ChiSquared()`](https://optad.github.io/adoptr/reference/ChiSquaredDataDistribution-class.md)
+  [`quantile(`*`<ChiSquared>`*`)`](https://optad.github.io/adoptr/reference/ChiSquaredDataDistribution-class.md)
+  [`simulate(`*`<ChiSquared>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/ChiSquaredDataDistribution-class.md)
+  : Chi-Squared data distribution
+
+- [`ConditionalPower()`](https://optad.github.io/adoptr/reference/ConditionalPower-class.md)
+  [`Power()`](https://optad.github.io/adoptr/reference/ConditionalPower-class.md)
+  [`evaluate(`*`<ConditionalPower>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/ConditionalPower-class.md)
+  : (Conditional) Power of a Design
+
+- [`ConditionalSampleSize()`](https://optad.github.io/adoptr/reference/ConditionalSampleSize-class.md)
+  [`ExpectedSampleSize()`](https://optad.github.io/adoptr/reference/ConditionalSampleSize-class.md)
+  [`ExpectedNumberOfEvents()`](https://optad.github.io/adoptr/reference/ConditionalSampleSize-class.md)
+  [`evaluate(`*`<ConditionalSampleSize>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/ConditionalSampleSize-class.md)
+  : (Conditional) Sample Size of a Design
+
+- [`evaluate(`*`<Constraint>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `<=`( ``*`<ConditionalScore>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `>=`( ``*`<ConditionalScore>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `<=`( ``*`<numeric>`*`,`*`<ConditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `>=`( ``*`<numeric>`*`,`*`<ConditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `<=`( ``*`<ConditionalScore>`*`,`*`<ConditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `>=`( ``*`<ConditionalScore>`*`,`*`<ConditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `<=`( ``*`<UnconditionalScore>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `>=`( ``*`<UnconditionalScore>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `<=`( ``*`<numeric>`*`,`*`<UnconditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `>=`( ``*`<numeric>`*`,`*`<UnconditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `<=`( ``*`<UnconditionalScore>`*`,`*`<UnconditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  [`` `>=`( ``*`<UnconditionalScore>`*`,`*`<UnconditionalScore>`*`)`](https://optad.github.io/adoptr/reference/Constraints.md)
+  : Formulating Constraints
+
+- [`ContinuousPrior()`](https://optad.github.io/adoptr/reference/ContinuousPrior-class.md)
+  : Continuous univariate prior distributions
+
+- [`DataDistribution-class`](https://optad.github.io/adoptr/reference/DataDistribution-class.md)
+  [`DataDistribution`](https://optad.github.io/adoptr/reference/DataDistribution-class.md)
+  : Data distributions
+
+- [`GroupSequentialDesign()`](https://optad.github.io/adoptr/reference/GroupSequentialDesign-class.md)
+  [`TwoStageDesign(`*`<GroupSequentialDesign>`*`)`](https://optad.github.io/adoptr/reference/GroupSequentialDesign-class.md)
+  [`TwoStageDesign(`*`<GroupSequentialDesignSurvival>`*`)`](https://optad.github.io/adoptr/reference/GroupSequentialDesign-class.md)
+  : Group-sequential two-stage designs
+
+- [`GroupSequentialDesignSurvival-class`](https://optad.github.io/adoptr/reference/GroupSequentialDesignSurvival-class.md)
+  : Group-sequential two-stage designs for time-to-event-endpoints
+
+- [`MaximumSampleSize()`](https://optad.github.io/adoptr/reference/MaximumSampleSize-class.md)
+  [`evaluate(`*`<MaximumSampleSize>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/MaximumSampleSize-class.md)
+  : Maximum Sample Size of a Design
+
+- [`N1()`](https://optad.github.io/adoptr/reference/N1-class.md)
+  [`evaluate(`*`<N1>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/N1-class.md)
+  : Regularize n1
+
+- [`NestedModels()`](https://optad.github.io/adoptr/reference/NestedModels-class.md)
+  [`quantile(`*`<NestedModels>`*`)`](https://optad.github.io/adoptr/reference/NestedModels-class.md)
+  [`simulate(`*`<NestedModels>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/NestedModels-class.md)
+  : F-Distribution
+
+- [`Normal()`](https://optad.github.io/adoptr/reference/NormalDataDistribution-class.md)
+  [`quantile(`*`<Normal>`*`)`](https://optad.github.io/adoptr/reference/NormalDataDistribution-class.md)
+  [`simulate(`*`<Normal>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/NormalDataDistribution-class.md)
+  : Normal data distribution
+
+- [`OneStageDesign()`](https://optad.github.io/adoptr/reference/OneStageDesign-class.md)
+  [`TwoStageDesign(`*`<OneStageDesign>`*`)`](https://optad.github.io/adoptr/reference/OneStageDesign-class.md)
+  [`TwoStageDesign(`*`<OneStageDesignSurvival>`*`)`](https://optad.github.io/adoptr/reference/OneStageDesign-class.md)
+  [`plot(`*`<OneStageDesign>`*`)`](https://optad.github.io/adoptr/reference/OneStageDesign-class.md)
+  : One-stage designs
+
+- [`OneStageDesignSurvival-class`](https://optad.github.io/adoptr/reference/OneStageDesignSurvival-class.md)
+  : One-stage designs for time-to-event endpoints
+
+- [`Pearson2xK()`](https://optad.github.io/adoptr/reference/Pearson2xK-class.md)
+  [`get_tau_Pearson2xK()`](https://optad.github.io/adoptr/reference/Pearson2xK-class.md)
+  : Pearson's chi-squared test for contingency tables
+
+- [`PointMassPrior()`](https://optad.github.io/adoptr/reference/PointMassPrior-class.md)
+  : Univariate discrete point mass priors
+
+- [`Prior-class`](https://optad.github.io/adoptr/reference/Prior-class.md)
+  [`Prior`](https://optad.github.io/adoptr/reference/Prior-class.md) :
+  Univariate prior on model parameter
+
+- [`expected()`](https://optad.github.io/adoptr/reference/Scores.md)
+  [`evaluate()`](https://optad.github.io/adoptr/reference/Scores.md) :
+  Scores
+
+- [`Student()`](https://optad.github.io/adoptr/reference/StudentDataDistribution-class.md)
+  [`quantile(`*`<Student>`*`)`](https://optad.github.io/adoptr/reference/StudentDataDistribution-class.md)
+  [`simulate(`*`<Student>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/StudentDataDistribution-class.md)
+  : Student's t data distribution
+
+- [`Survival()`](https://optad.github.io/adoptr/reference/SurvivalDataDistribution-class.md)
+  [`quantile(`*`<Survival>`*`)`](https://optad.github.io/adoptr/reference/SurvivalDataDistribution-class.md)
+  [`simulate(`*`<Survival>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/SurvivalDataDistribution-class.md)
+  : Log-rank test
+
+- [`SurvivalDesign()`](https://optad.github.io/adoptr/reference/SurvivalDesign.md)
+  [`TwoStageDesign(`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/SurvivalDesign.md)
+  [`OneStageDesign(`*`<OneStageDesign>`*`)`](https://optad.github.io/adoptr/reference/SurvivalDesign.md)
+  [`GroupSequentialDesign(`*`<GroupSequentialDesign>`*`)`](https://optad.github.io/adoptr/reference/SurvivalDesign.md)
+  : SurvivalDesign
+
+- [`TwoStageDesign()`](https://optad.github.io/adoptr/reference/TwoStageDesign-class.md)
+  [`summary(`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/TwoStageDesign-class.md)
+  : Two-stage designs
+
+- [`TwoStageDesignSurvival-class`](https://optad.github.io/adoptr/reference/TwoStageDesignSurvival-class.md)
+  : Two-stage design for time-to-event-endpoints
+
+- [`ZSquared()`](https://optad.github.io/adoptr/reference/ZSquared-class.md)
+  [`get_tau_ZSquared()`](https://optad.github.io/adoptr/reference/ZSquared-class.md)
+  : Distribution class of a squared normal distribution
+
+- [`adoptr-package`](https://optad.github.io/adoptr/reference/adoptr.md)
+  [`adoptr`](https://optad.github.io/adoptr/reference/adoptr.md) :
+  Adaptive Optimal Two-Stage Designs
+
+- [`get_lower_boundary_design()`](https://optad.github.io/adoptr/reference/boundary-designs.md)
+  [`get_upper_boundary_design()`](https://optad.github.io/adoptr/reference/boundary-designs.md)
+  : Boundary designs
+
+- [`bounds()`](https://optad.github.io/adoptr/reference/bounds.md) : Get
+  support of a prior or data distribution
+
+- [`composite()`](https://optad.github.io/adoptr/reference/composite.md)
+  [`evaluate(`*`<CompositeScore>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/composite.md)
+  : Score Composition
+
+- [`condition()`](https://optad.github.io/adoptr/reference/condition.md)
+  : Condition a prior on an interval
+
+- [`c2()`](https://optad.github.io/adoptr/reference/critical-values.md)
+  : Query critical values of a design
+
+- [`cumulative_distribution_function()`](https://optad.github.io/adoptr/reference/cumulative_distribution_function.md)
+  : Cumulative distribution function
+
+- [`expectation()`](https://optad.github.io/adoptr/reference/expectation.md)
+  : Expected value of a function
+
+- [`get_initial_design()`](https://optad.github.io/adoptr/reference/get_initial_design.md)
+  : Initial design
+
+- [`make_tunable()`](https://optad.github.io/adoptr/reference/make_tunable.md)
+  [`make_fixed()`](https://optad.github.io/adoptr/reference/make_tunable.md)
+  : Fix parameters during optimization
+
+- [`minimize()`](https://optad.github.io/adoptr/reference/minimize.md) :
+  Find optimal two-stage design by constraint minimization
+
+- [`n1()`](https://optad.github.io/adoptr/reference/n.md)
+  [`n2()`](https://optad.github.io/adoptr/reference/n.md)
+  [`n()`](https://optad.github.io/adoptr/reference/n.md) : Query sample
+  size of a design
+
+- [`plot(`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/plot-TwoStageDesign-method.md)
+  :
+
+  Plot `TwoStageDesign` with optional set of conditional scores
+
+- [`posterior()`](https://optad.github.io/adoptr/reference/posterior.md)
+  : Compute posterior distribution
+
+- [`predictive_cdf()`](https://optad.github.io/adoptr/reference/predictive_cdf.md)
+  : Predictive CDF
+
+- [`predictive_pdf()`](https://optad.github.io/adoptr/reference/predictive_pdf.md)
+  : Predictive PDF
+
+- [`print()`](https://optad.github.io/adoptr/reference/print.adoptrOptimizationResult.md)
+  : Printing an optimization result
+
+- [`probability_density_function()`](https://optad.github.io/adoptr/reference/probability_density_function.md)
+  : Probability density function
+
+- [`simulate(`*`<TwoStageDesign>`*`,`*`<numeric>`*`)`](https://optad.github.io/adoptr/reference/simulate-TwoStageDesign-numeric-method.md)
+  : Draw samples from a two-stage design
+
+- [`subject_to()`](https://optad.github.io/adoptr/reference/subject_to.md)
+  [`evaluate(`*`<ConstraintsCollection>`*`,`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/subject_to.md)
+  : Create a collection of constraints
+
+- [`tunable_parameters()`](https://optad.github.io/adoptr/reference/tunable_parameters.md)
+  [`update(`*`<TwoStageDesign>`*`)`](https://optad.github.io/adoptr/reference/tunable_parameters.md)
+  [`update(`*`<OneStageDesign>`*`)`](https://optad.github.io/adoptr/reference/tunable_parameters.md)
+  : Switch between numeric and S4 class representation of a design

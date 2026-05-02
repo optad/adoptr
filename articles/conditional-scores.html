@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Conditional Scores and Constraints • adoptr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Conditional Scores and Constraints">
 </head>
 <body>
@@ -97,14 +96,14 @@ following example design</p>
 <span>    c2_pivots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu">adoptr</span><span class="fu">:::</span><span class="fu">GaussLegendreRule</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">$</span><span class="va">nodes</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span><span class="va">x</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></code></pre></div>
-<p><img src="conditional-scores_files/figure-html/define-design-1.png" width="672"></p>
+<p><img src="conditional-scores_files/figure-html/define-design-1.png" class="r-plt" alt="" width="672"></p>
 <p>In adoptr, scores are instances of their respective score class. The
 most important ones are: <code>ConditionalScore</code>,
 <code>UnconditionalScore</code>, and <code>IntegralScore</code>. An
 object of class <code>ConditionalScore</code> can evaluate a design for
 a particular stage-one outcome. A <code>ConditionalScore</code> is a
 function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒟</mi><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">s(\mathcal{D}, x_1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mi>𝒟</mi><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">s(\mathcal{D}, x_1)</annotation></semantics></math>
 evaluating a design
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝒟</mi><annotation encoding="application/x-tex">\mathcal{D}</annotation></semantics></math>
 at a stage-one outcome
@@ -130,7 +129,7 @@ score evaluation is completely vectorized:</p>
 including them in the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">design</span>, <span class="st">"Conditional Power"</span> <span class="op">=</span> <span class="va">cp</span><span class="op">)</span></span></code></pre></div>
-<p><img src="conditional-scores_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+<p><img src="conditional-scores_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
 <p>Any conditional score can be integrated with respect to a prior and
 data distribution to obtain an unconditional score. Note that for
 conditional scores which depend on a specification of these
@@ -201,7 +200,7 @@ conditional error.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
