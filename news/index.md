@@ -1,5 +1,7 @@
 # Changelog
 
+## adoptr (development version)
+
 ## adoptr 1.1.2
 
 CRAN release: 2026-05-03
