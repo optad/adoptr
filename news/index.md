@@ -2,6 +2,8 @@
 
 ## adoptr 1.1.2
 
+CRAN release: 2026-05-03
+
 - fix documentation problem according to CRAN checks
 - update maintainer e-mail
 

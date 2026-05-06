@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/optad/adoptr/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/optad/adoptr/blob/v1.1.2/inst/CITATION)
 
 Kunzmann K, Pilz M, Herrmann C, Rauch G, Kieser M (2021). “The adoptr
 Package: Adaptive Optimal Designs for Clinical Trials in R.” *Journal of
