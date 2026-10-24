@@ -80,15 +80,7 @@ setMethod("OneStageDesign", signature("OneStageDesign"),
 #' @export
 setMethod("update", signature("OneStageDesign"),
           function(object, params, ...) {
-            tunable_names <- names(object@tunable)[object@tunable]
-            res <- object
-            idx <- 1
-            for (i in 1:length(tunable_names)) {
-              slotname <- tunable_names[i]
-              k <- length(slot(object, name = slotname))
-              slot(res, name = slotname) <- params[idx:(idx + k - 1)]
-              idx <- idx + k
-            }
+            res <- update_tunable_slots(object, params)
             res@c1e <- res@c1f
             return(res)
           })
@@ -100,7 +92,7 @@ setMethod("update", signature("OneStageDesign"),
 #' @rdname n
 #' @export
 setMethod("n2", signature("OneStageDesign", "numeric"),
-          function(d, x1, ...) 0 )
+          function(d, x1, ...) numeric(length(x1)) ) # zero for every x1
 
 
 
@@ -127,7 +119,7 @@ setMethod("c2", signature("OneStageDesign", "numeric"),
 #' @export
 setMethod("TwoStageDesign", signature("OneStageDesign"),
           function(n1, event_rate,order = 5L, eps = .01, ...){
-            
+
             c2 <- numeric(order)
             c2[1:floor(order / 2)] <- rep(3, floor(order / 2))
             c2[(ceiling(order / 2) + 1):order] <- rep(-3, floor(order / 2))
@@ -150,9 +142,9 @@ setMethod("TwoStageDesign", signature("OneStageDesign"),
                   c1e            = n1@c1f + eps, # needs to be done for interpolation
                   n2_pivots      = rep(0, order),
                   c2_pivots      = c2 # acceptance left/rejection right from c
-                  
+
                 ))}
-            
+
           })
 
 #' @param n1 \code{OneStageDesign} object to convert, overloaded from
@@ -169,11 +161,11 @@ setMethod("TwoStageDesign", signature("OneStageDesign"),
 #' @export
 setMethod("TwoStageDesign", signature("OneStageDesignSurvival"),
           function(n1, order = 5L, eps = .01, ...){
-            
+
             c2 <- numeric(order)
             c2[1:floor(order / 2)] <- rep(3, floor(order / 2))
             c2[(ceiling(order / 2) + 1):order] <- rep(-3, floor(order / 2))
-            
+
             return(
               TwoStageDesign(
                 n1             = n1@n1,
@@ -184,7 +176,7 @@ setMethod("TwoStageDesign", signature("OneStageDesignSurvival"),
                 event_rate     = n1@event_rate
               )
             )
-            
+
           })
 
 #' plot() is not defined for one stage designs
@@ -201,12 +193,9 @@ setMethod("plot", signature("OneStageDesign"),
 #' @export
 setMethod("SurvivalDesign", signature("OneStageDesign"),
           function(design, event_rate){
-            tunable <- logical(8) # initialize to all false
-            tunable[1:2] <- TRUE
-            names(tunable) <- c("n1", "c1f", "c1e", "n2_pivots", "c2_pivots", "x1_norm_pivots", "weights", "tunable")
             new("OneStageDesignSurvival",
                 n1=design@n1,c1f=design@c1f,c1e=design@c1e,n2_pivots=design@n2_pivots,
                 c2_pivots=design@c2_pivots,
                 x1_norm_pivots = design@x1_norm_pivots, weights = design@weights,
-                tunable = tunable, event_rate=event_rate)
+                tunable = design@tunable, event_rate=event_rate)
           })

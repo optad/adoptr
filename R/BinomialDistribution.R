@@ -15,14 +15,14 @@
 #' where \ifelse{html}{\out{r<sub>0</sub>}}{\eqn{r_0}} denotes the mean between
 #' \ifelse{html}{\out{r<sub>E</sub>}}{\eqn{r_E}} and
 #' \ifelse{html}{\out{r<sub>C</sub>}}{\eqn{r_C}} in the two-armed case,
-#' and \ifelse{html}{\out{r<sub>E</sub>}}{\eqn{r_E}} in the one-armed case.#'
+#' and \ifelse{html}{\out{r<sub>E</sub>}}{\eqn{r_E}} in the one-armed case.
 #' All priors have to be defined for the rate difference
 #' \ifelse{html}{\out{r<sub>E</sub> - r<sub>C</sub>}}{\eqn{r_E - r_C}}.
 #'
 #' @slot rate_control cf. parameter 'rate_control'
 #'
 #' @template DataDistributionTemplate
-#' 
+#'
 #' @include DataDistribution.R
 #'
 #' @rdname BinomialDataDistribution-class
@@ -53,6 +53,28 @@ Binomial <- function(rate_control, two_armed = TRUE) {
 }
 
 
+# internal: mean and standard deviation of the (normal approximation of the)
+# test statistic for the rate difference theta (per unit of sqrt(n))
+binomial_moments <- function(dist, theta) {
+    rate_intervention <- theta + dist@rate_control
+    if (any(rate_intervention >= 1, rate_intervention <= 0)) # nocov start
+        stop("The response rate in the intervention group must be in (0,1)! Probably the combination of prior and control rate is ill-defined.")
+    # nocov end
+
+    if (dist@two_armed) {
+        sigma_A <- sqrt(rate_intervention * (1 - rate_intervention) +
+                            dist@rate_control * (1 - dist@rate_control))
+        p_0     <- (dist@rate_control + rate_intervention) / 2
+        sigma_0 <- sqrt(2 * p_0 * (1 - p_0))
+    } else {
+        sigma_A <- sqrt(rate_intervention * (1 - rate_intervention))
+        p_0     <- dist@rate_control
+        sigma_0 <- sqrt(p_0 * (1 - p_0))
+    }
+    list(mean_factor = theta / sigma_0, sd = sigma_A / sigma_0)
+}
+
+
 #' @examples
 #' probability_density_function(Binomial(.2, FALSE), 1, 50, .3)
 #'
@@ -66,17 +88,8 @@ Binomial <- function(rate_control, two_armed = TRUE) {
 #' @export
 setMethod("probability_density_function", signature("Binomial", "numeric", "numeric", "numeric"),
           function(dist, x, n, theta, ...) {
-              rate_intervention <- theta + dist@rate_control
-              if (any(rate_intervention >= 1, rate_intervention <= 0)) # nocov start
-                  stop("The response rate in the intervention group must be in (0,1)! Probably the combination of prior and control rate is ill-defined.")
-              # nocov end
-
-              sigma_A <- sqrt(rate_intervention * (1 - rate_intervention) +
-                                  ifelse(dist@two_armed, dist@rate_control * (1 - dist@rate_control), 0))
-              p_0     <- (dist@rate_control + ifelse(dist@two_armed, rate_intervention, dist@rate_control)) / 2
-              sigma_0 <- ifelse(dist@two_armed, sqrt(2 * p_0 * (1 - p_0)), sqrt(p_0 * (1 - p_0)))
-
-              return(stats::dnorm(x, mean = sqrt(n) * theta / sigma_0, sd = sigma_A / sigma_0))
+              mom <- binomial_moments(dist, theta)
+              return(stats::dnorm(x, mean = sqrt(n) * mom$mean_factor, sd = mom$sd))
           })
 
 
@@ -93,16 +106,8 @@ setMethod("probability_density_function", signature("Binomial", "numeric", "nume
 #' @export
 setMethod("cumulative_distribution_function", signature("Binomial", "numeric", "numeric", "numeric"),
           function(dist, x, n, theta, ...) {
-              rate_intervention <- theta + dist@rate_control
-              if (any(rate_intervention >= 1, rate_intervention <= 0)) # nocov start
-                  stop("The response rate in the intervention group must be in (0,1)! Probably the combination of prior and control rate is ill-defined.")
-              # nocov end
-              sigma_A <- sqrt(rate_intervention * (1 - rate_intervention) +
-                                  ifelse(dist@two_armed, dist@rate_control * (1 - dist@rate_control), 0))
-              p_0     <- (dist@rate_control + ifelse(dist@two_armed, rate_intervention, dist@rate_control)) / 2
-              sigma_0 <- ifelse(dist@two_armed, sqrt(2 * p_0 * (1 - p_0)), sqrt(p_0 * (1 - p_0)))
-
-              return(stats::pnorm(x, mean = sqrt(n) * theta / sigma_0, sd = sigma_A / sigma_0))
+              mom <- binomial_moments(dist, theta)
+              return(stats::pnorm(x, mean = sqrt(n) * mom$mean_factor, sd = mom$sd))
         })
 
 
@@ -112,16 +117,8 @@ setMethod("cumulative_distribution_function", signature("Binomial", "numeric", "
 #' @export
 setMethod("quantile", signature("Binomial"),
           function(x, probs, n, theta, ...) { # must be x to conform with generic
-              rate_intervention <- theta + x@rate_control
-              if (any(rate_intervention >= 1, rate_intervention <= 0)) # nocov start
-                  stop("The response rate in the intervention group must be in (0,1)! Probably the combination of prior and control rate is ill-defined.")
-              # nocov end
-              sigma_A <- sqrt(rate_intervention * (1 - rate_intervention) +
-                                  ifelse(x@two_armed, x@rate_control * (1 - x@rate_control), 0))
-              p_0     <- (x@rate_control + ifelse(x@two_armed, rate_intervention, x@rate_control)) / 2
-              sigma_0 <- ifelse(x@two_armed, sqrt(2 * p_0 * (1 - p_0)), sqrt(p_0 * (1 - p_0)))
-
-              return(stats::qnorm(probs, mean = sqrt(n) * theta / sigma_0, sd = sigma_A / sigma_0))
+              mom <- binomial_moments(x, theta)
+              return(stats::qnorm(probs, mean = sqrt(n) * mom$mean_factor, sd = mom$sd))
           })
 
 
@@ -138,18 +135,11 @@ setMethod("quantile", signature("Binomial"),
 #' @export
 setMethod("simulate", signature("Binomial", "numeric"),
           function(object, nsim, n, theta, seed = NULL, ...) {
-              rate_intervention <- theta + object@rate_control
-              if (any(rate_intervention >= 1, rate_intervention <= 0)) # nocov start
-                  stop("The response rate in the intervention group must be in (0,1)! Probably the combination of prior and control rate is ill-defined.")
-              # nocov end
-              sigma_A <- sqrt(rate_intervention * (1 - rate_intervention) +
-                                  ifelse(object@two_armed, object@rate_control * (1 - object@rate_control), 0))
-              p_0     <- (object@rate_control + ifelse(object@two_armed, rate_intervention, object@rate_control)) / 2
-              sigma_0 <- ifelse(object@two_armed, sqrt(2 * p_0 * (1 - p_0)), sqrt(p_0 * (1 - p_0)))
+              mom <- binomial_moments(object, theta)
 
               if (!is.null(seed)) set.seed(seed)
 
-              return(stats::rnorm(nsim, mean = sqrt(n) * theta / sigma_0, sd = sigma_A / sigma_0))
+              return(stats::rnorm(nsim, mean = sqrt(n) * mom$mean_factor, sd = mom$sd))
 })
 
 

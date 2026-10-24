@@ -47,4 +47,18 @@ integrate_rule <- function(f, low, up, x, weights) {
 gauss_quad <- function(ff, low, up, weights) (up - low)/2 * sum(weights * ff)
 
 
+# Fast replacement for expand.grid(x = x, theta = theta), internal
+#
+# Returns a list with the two columns of the grid (first factor varies
+# fastest, exactly as in expand.grid). Avoids the construction of a data.frame,
+# which is comparatively expensive and was called in every score evaluation
+# during optimization.
+grid_x_theta <- function(x, theta) {
+    list(
+        x     = rep(x, times = length(theta)),
+        theta = rep(theta, each = length(x))
+    )
+}
+
+
 setGeneric("as_character", function(x, ...) standardGeneric("as_character"))

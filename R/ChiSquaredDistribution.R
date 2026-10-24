@@ -7,7 +7,7 @@
 #' \ifelse{html}{\out{r<sub>1</sub>}=...=\out{r<sub>k</sub>}}{\eqn{r_1=...=r_k}}, and the
 #' alternative is that there exists a pair of groups with differing rates.
 #' \code{ZSquared} implements the square of a normally distributed random variable
-#' with mean \eqn{\mu} and standard deviation \eqn{\sigma^2}.
+#' with mean \eqn{\mu} and variance \eqn{\sigma^2}.
 #'
 #' @template DataDistributionTemplate
 #'
@@ -57,12 +57,12 @@ ChiSquared <- function(df) {
 
 #' Pearson's chi-squared test for 2 x k contingency tables
 #'
-#' When we test for homogeneity of rates in a k-armed trial with binary endpoints, 
-#' the test statistic is chi-squared distributed with \eqn{k-1} degrees of 
-#' freedom under the null. Under the alternative, the statistic is chi-squared 
-#' distributed with a non-centrality parameter \eqn{\lambda}. 
-#' The function \code{get_tau_Pearson2xk} then computes \eqn{\tau}, such that 
-#' \eqn{\lambda} is given as \eqn{n \cdot \tau}, where \eqn{n} is the number of 
+#' When we test for homogeneity of rates in a k-armed trial with binary endpoints,
+#' the test statistic is chi-squared distributed with \eqn{k-1} degrees of
+#' freedom under the null. Under the alternative, the statistic is chi-squared
+#' distributed with a non-centrality parameter \eqn{\lambda}.
+#' The function \code{get_tau_Pearson2xk} then computes \eqn{\tau}, such that
+#' \eqn{\lambda} is given as \eqn{n \cdot \tau}, where \eqn{n} is the number of
 #' subjects per group. In \code{adoptr}, \eqn{\tau} is used in the same way as \eqn{\theta}
 #' in the case of the normally distributed test statistic.
 #'
@@ -75,8 +75,8 @@ ChiSquared <- function(df) {
 #' @rdname Pearson2xK-class
 #' @export
 Pearson2xK <- function(n_groups) {
-  if (n_groups < 0 || abs(n_groups - round(n_groups)) > sqrt(.Machine$double.eps))
-    stop("The number of groups must be a natural number.")
+  if (n_groups < 2 || abs(n_groups - round(n_groups)) > sqrt(.Machine$double.eps))
+    stop("The number of groups must be a natural number of at least two.")
   new("Pearson2xK", df = n_groups - 1L, multiplier = 1 / n_groups)
 }
 
@@ -99,12 +99,12 @@ get_tau_Pearson2xK <- function(p_vector) {
 
 #' Squared normally distributed random variable
 #'
-#' Implementation of \eqn{Z^2}, where \eqn{Z} is normally distributed with mean 
-#' \eqn{\mu} and variance \eqn{\sigma^2}. \eqn{Z^2} is chi-squared distributed 
+#' Implementation of \eqn{Z^2}, where \eqn{Z} is normally distributed with mean
+#' \eqn{\mu} and variance \eqn{\sigma^2}. \eqn{Z^2} is chi-squared distributed
 #' with \eqn{1} degree of freedom and non-centrality parameter \eqn{(\mu/\sigma)^2}.
-#' The function \code{get_tau_ZSquared} computes the factor \eqn{\tau=(\mu/\sigma)^2}, 
-#' such that \eqn{\tau} is the equivalent of \eqn{\theta} in the normally 
-#' distributed case. The square of a normal distribution \eqn{Z^2} can be used 
+#' The function \code{get_tau_ZSquared} computes the factor \eqn{\tau=(\mu/\sigma)^2},
+#' such that \eqn{\tau} is the equivalent of \eqn{\theta} in the normally
+#' distributed case. The square of a normal distribution \eqn{Z^2} can be used
 #' for two-sided hypothesis testing.
 #'
 #' @param two_armed logical indicating if a two-armed trial is regarded

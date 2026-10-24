@@ -54,11 +54,13 @@ setClass("UnconditionalConstraint", representation(
 
 
 
+# All arguments after the design (x1 for conditional constraints, optimization,
+# and further optional arguments) are handed to the score unchanged.
 #' @rdname Constraints
 #' @export
 setMethod("evaluate", signature("Constraint", "TwoStageDesign"),
-          function(s, design, optimization = FALSE, ...) {
-              evaluate(s@score, design, optimization, ...) - s@rhs
+          function(s, design, ...) {
+              evaluate(s@score, design, ...) - s@rhs
           })
 
 setMethod("print", signature('UnconditionalConstraint'), function(x, ...) { # nocov start
@@ -184,7 +186,7 @@ subject_to <- function(...) {
     # sort arguments to conditional vs. unconditional
     conditional <- list()
     unconditional <- list()
-    for (i in 1:length(args)) {
+    for (i in seq_along(args)) {
         if (is(args[[i]], "ConditionalConstraint")) {
             conditional <- append(conditional, args[i])
         } else {
@@ -206,11 +208,11 @@ subject_to <- function(...) {
 setMethod("evaluate", signature("ConstraintsCollection", "TwoStageDesign"),
           function(s, design, optimization = FALSE, ...) {
               x1_cont <- scaled_integration_pivots(design)
-              unconditional <- as.numeric(unlist(sapply(
+              unconditional <- as.numeric(unlist(lapply(
                   s@unconditional_constraints,
                   function(cnstr) evaluate(cnstr, design, optimization, ...)
               )))
-              conditional <- as.numeric(unlist(sapply(
+              conditional <- as.numeric(unlist(lapply(
                   s@conditional_constraints,
                   function(cnstr) evaluate(cnstr, design, x1_cont, optimization, ...)
               )))

@@ -7,12 +7,21 @@
 #' This abstraction layer allows the representation of t-distributions
 #' (unknown variance), normal distribution (known variance), and normal
 #' approximation of a binary endpoint.
-#' Currently, the two implemented versions are \code{\link{Normal-class}} and
-#' \code{\link{Binomial-class}}.
+#' Currently, the implemented versions are \code{\link{Normal-class}},
+#' \code{\link{Binomial-class}}, \code{\link{Student-class}},
+#' \code{\link{Survival-class}}, \code{\link{ChiSquared-class}} (including
+#' \code{\link{Pearson2xK-class}} and \code{\link{ZSquared-class}}) and
+#' \code{\link{ANOVA-class}} / \code{\link{NestedModels-class}}.
 #'
 #' The logical option \code{two_armed} allows to decide whether a one-arm or
 #' a two-arm (the default) design should be computed. In the case of a two-arm
 #' design all sample sizes are per group.
+#'
+#' Note for own implementations: the methods
+#' \code{probability_density_function}, \code{cumulative_distribution_function}
+#' and \code{quantile} are evaluated on whole grids of \code{x}, \code{n} and
+#' \code{theta} (vectors of equal length) in the optimization routines, so they
+#' have to be vectorized in all three arguments.
 #'
 #' @slot two_armed Logical that indicates if a two-arm design is assumed.
 #'

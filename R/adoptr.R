@@ -51,8 +51,9 @@
 #' See \code{\link{Scores}} for information on the basic system of representing
 #' scores.
 #' Available scores are \code{\link{ConditionalPower}},
-#' \code{\link{ConditionalSampleSize}}, \code{\link{Power}}, and
-#' \code{\link{ExpectedSampleSize}}.
+#' \code{\link{ConditionalSampleSize}}, \code{\link{Power}},
+#' \code{\link{ExpectedSampleSize}}, \code{\link{MaximumSampleSize}},
+#' \code{\link{AverageN2}} and \code{\link{N1}}.
 #'
 #'
 #'

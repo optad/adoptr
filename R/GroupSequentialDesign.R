@@ -21,7 +21,7 @@ setClass("GroupSequentialDesign",  contains = "TwoStageDesign")
 #' for superclasses and inherited methods.
 #'
 #' @exportClass GroupSequentialDesignSurvival
-setClass("GroupSequentialDesignSurvival", 
+setClass("GroupSequentialDesignSurvival",
          contains = c("GroupSequentialDesign", "TwoStageDesignSurvival"))
 
 #' @export
@@ -44,26 +44,28 @@ setGeneric("GroupSequentialDesign", function(n1,...) standardGeneric("GroupSeque
 #' @examples
 #' design <- GroupSequentialDesign(25, 0, 2, 25, c(1, 1.5, 2.5))
 #' summary(design)
-#' 
+#'
 #' design_survival <- GroupSequentialDesign(25, 0, 2, 25, c(1, 1.5, 2.5), event_rate = 0.7)
 #'
 #' @rdname GroupSequentialDesign-class
 #' @export
 
-setMethod(GroupSequentialDesign, signature = "numeric",
+setMethod("GroupSequentialDesign", signature = "numeric",
           function(n1, c1f, c1e, n2_pivots, c2_pivots, order = NULL, event_rate, ...) {
+              if (length(n2_pivots) != 1)
+                  stop("n2_pivots must be of length one for group-sequential designs!")
               if (is.null(order)) {
                   order <- length(c2_pivots)
                   } else if (length(c2_pivots) != order) {
                       c2_pivots <- rep(c2_pivots[1], order)
                   }
-          
+
                rule <- GaussLegendreRule(as.integer(order))
-          
+
                tunable <- logical(8) # initialize to all false
                tunable[1:5] <- TRUE
                names(tunable) <- c("n1", "c1f", "c1e", "n2_pivots", "c2_pivots", "x1_norm_pivots", "weights", "tunable")
-          
+
                if (missing(event_rate)) {
                  new("GroupSequentialDesign", n1 = n1, c1f = c1f, c1e = c1e,
                      n2_pivots = n2_pivots, c2_pivots = c2_pivots,
@@ -71,7 +73,7 @@ setMethod(GroupSequentialDesign, signature = "numeric",
                  } else {
                    new("GroupSequentialDesignSurvival", n1 = n1, c1f = c1f, c1e = c1e,
                      n2_pivots = n2_pivots, c2_pivots = c2_pivots,
-                     x1_norm_pivots = rule$nodes, weights = rule$weights, tunable = tunable, 
+                     x1_norm_pivots = rule$nodes, weights = rule$weights, tunable = tunable,
                      event_rate = event_rate)
                }
 })
@@ -112,21 +114,18 @@ setMethod("n2", signature("GroupSequentialDesign", "numeric"),
 #' @export
 setMethod("TwoStageDesign", signature("GroupSequentialDesign"),
      function(n1, event_rate, ...){
-         tunable <- logical(8) # initialize to all false
-         tunable[1:5] <- TRUE
-         names(tunable) <- c("n1", "c1f", "c1e", "n2_pivots", "c2_pivots", "x1_norm_pivots", "weights", "tunable")
          if (!missing(event_rate)) {
            new("TwoStageDesignSurvival", n1 = n1@n1, c1f = n1@c1f, c1e = n1@c1e,
                n2_pivots = rep(n1@n2_pivots, length(n1@weights)),
                c2_pivots = n1@c2_pivots,
                x1_norm_pivots = n1@x1_norm_pivots, weights = n1@weights,
-               tunable = tunable, event_rate=event_rate)
+               tunable = n1@tunable, event_rate=event_rate)
            } else {
              new("TwoStageDesign", n1 = n1@n1, c1f = n1@c1f, c1e = n1@c1e,
                n2_pivots = rep(n1@n2_pivots, length(n1@weights)),
                c2_pivots = n1@c2_pivots,
                x1_norm_pivots = n1@x1_norm_pivots, weights = n1@weights,
-               tunable = tunable)
+               tunable = n1@tunable)
              }
 })
 
@@ -140,25 +139,20 @@ setMethod("TwoStageDesign", signature("GroupSequentialDesign"),
 #' @export
 setMethod("TwoStageDesign", signature("GroupSequentialDesignSurvival"),
           function(n1, ...){
-            tunable <- logical(8) # initialize to all false
-            tunable[1:5] <- TRUE
-            names(tunable) <- c("n1", "c1f", "c1e", "n2_pivots", "c2_pivots", "x1_norm_pivots", "weights", "tunable")
-            return(TwoStageDesign(n1 = n1@n1, c1f = n1@c1f, c1e = n1@c1e,
-                                  n2_pivots = rep(n1@n2_pivots, length(n1@weights)),
-                                  c2_pivots = n1@c2_pivots,
-                                  x1_norm_pivots = n1@x1_norm_pivots, weights = n1@weights,
-                                  tunable = tunable,event_rate=n1@event_rate))})
+            new("TwoStageDesignSurvival", n1 = n1@n1, c1f = n1@c1f, c1e = n1@c1e,
+                n2_pivots = rep(n1@n2_pivots, length(n1@weights)),
+                c2_pivots = n1@c2_pivots,
+                x1_norm_pivots = n1@x1_norm_pivots, weights = n1@weights,
+                tunable = n1@tunable, event_rate = n1@event_rate)
+          })
 
 #' @rdname SurvivalDesign
 #' @export
 setMethod("SurvivalDesign", signature("GroupSequentialDesign"),
           function(design,event_rate){
-            tunable <- logical(8) # initialize to all false
-            tunable[1:5] <- TRUE
-            names(tunable) <- c("n1", "c1f", "c1e", "n2_pivots", "c2_pivots", "x1_norm_pivots", "weights", "tunable")
             new("GroupSequentialDesignSurvival",
                 n1=design@n1,c1f=design@c1f,c1e=design@c1e,n2_pivots=design@n2_pivots,
                 c2_pivots=design@c2_pivots,
                 x1_norm_pivots = design@x1_norm_pivots, weights = design@weights,
-                tunable = tunable, event_rate=event_rate)
+                tunable = design@tunable, event_rate=event_rate)
           })

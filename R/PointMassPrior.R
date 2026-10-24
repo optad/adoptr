@@ -33,9 +33,14 @@ setClass("PointMassPrior", representation(
 #' @rdname PointMassPrior-class
 #' @export
 PointMassPrior <- function(theta, mass, label = NA_character_) {
+    if (length(theta) != length(mass))
+        stop("theta and mass must be of same length")
+    if (any(is.na(mass)) || any(mass < 0))
+        stop("mass must be non-negative")
     if (round(sum(mass), 10) != 1)
         stop("mass must sum to one")
-    new("PointMassPrior", theta = theta[order(theta)], mass = mass[order(theta)],
+    ord <- order(theta)
+    new("PointMassPrior", theta = theta[ord], mass = mass[ord],
         label = label)
 }
 
@@ -61,7 +66,7 @@ setMethod("print", signature('PointMassPrior'), function(x, ...) {
 
 #' @examples
 #' bounds(PointMassPrior(c(0, .5), c(.3, .7)))
-#' # > 0.3 0.7
+#' # > 0.0 0.5
 #'
 #' @rdname bounds
 #' @export
@@ -96,6 +101,8 @@ setMethod("condition", signature("PointMassPrior", "numeric"),
         epsilon <- sqrt(.Machine$double.eps)
         # find indices of pivots wihtin interval (up to machine precision!)
         idx <- (interval[1] - dist@theta <= epsilon) & (dist@theta - interval[2] <= epsilon)
+        if (!any(idx) || sum(dist@mass[idx]) <= 0)
+            stop("the prior has no mass in the given interval")
         # re-normalize and return
         return(PointMassPrior(
             dist@theta[idx], dist@mass[idx] / sum(dist@mass[idx])
@@ -110,8 +117,8 @@ setMethod("condition", signature("PointMassPrior", "numeric"),
 #' @export
 setMethod("predictive_pdf", signature("DataDistribution", "PointMassPrior", "numeric"),
     function(dist, prior, x1, n1, ...) {
-        grid <- expand.grid(x1 = x1, piv = prior@theta)
-        (matrix(probability_density_function(dist, grid$x1, n1, grid$piv), nrow = length(x1)) %*% prior@mass)[, 1]
+        grid <- grid_x_theta(x1, prior@theta)
+        (matrix(probability_density_function(dist, grid$x, n1, grid$theta), nrow = length(x1)) %*% prior@mass)[, 1]
     })
 
 
@@ -122,8 +129,8 @@ setMethod("predictive_pdf", signature("DataDistribution", "PointMassPrior", "num
 #' @export
 setMethod("predictive_cdf", signature("DataDistribution", "PointMassPrior", "numeric"),
     function(dist, prior, x1, n1, ...) {
-        grid <- expand.grid(x1 = x1, piv = prior@theta)
-        (matrix(cumulative_distribution_function(dist, grid$x1, n1, grid$piv), nrow = length(x1)) %*% prior@mass)[, 1]
+        grid <- grid_x_theta(x1, prior@theta)
+        (matrix(cumulative_distribution_function(dist, grid$x, n1, grid$theta), nrow = length(x1)) %*% prior@mass)[, 1]
     })
 
 
@@ -135,7 +142,9 @@ setMethod("predictive_cdf", signature("DataDistribution", "PointMassPrior", "num
 setMethod("posterior", signature("DataDistribution", "PointMassPrior", "numeric"),
     function(dist, prior, x1, n1, ...) {
         if (length(prior@theta) == 1) return(prior) # shortcut
-        mass <- prior@mass * probability_density_function(dist, x1, n1, prior@theta)
-        mass <- mass / sum(mass) # normalize
-        PointMassPrior(prior@theta, mass)
+        mass  <- prior@mass * probability_density_function(dist, x1, n1, prior@theta)
+        total <- sum(mass)
+        if (!is.finite(total) || total <= 0)
+            stop("posterior is undefined: the observation has zero likelihood under every support point of the prior")
+        PointMassPrior(prior@theta, mass / total) # normalize
     })
