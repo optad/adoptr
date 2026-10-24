@@ -133,6 +133,7 @@ setMethod("TwoStageDesign", signature = "numeric",
 #' SurvivalDesign
 #'
 #' \code{SurvivalDesign} is a function that converts an arbitrary design to a survival design.
+#' The tunability status of the parameters (cf. \code{\link{make_fixed}}) is kept.
 #' @param design design that should be converted to a survival design
 #' @param event_rate probability that a subject in either group will eventually have an event
 #' @examples
@@ -141,7 +142,7 @@ setMethod("TwoStageDesign", signature = "numeric",
 #'
 #' design_os <- get_initial_design(0.4, 0.025, 0.1, type_design = "one-stage")
 #' design_gs <- get_initial_design(0.4, 0.025, 0.1, type_design = "group-sequential")
-#' 
+#'
 #' @return Converts any type of design to a survival design
 #'
 #' @export
@@ -152,14 +153,11 @@ setGeneric("SurvivalDesign", function(design, event_rate) standardGeneric("Survi
 #' @export
 setMethod("SurvivalDesign", signature("TwoStageDesign"),
           function(design,event_rate){
-            tunable <- logical(8) # initialize to all false
-            tunable[1:5] <- TRUE
-            names(tunable) <- c("n1", "c1f", "c1e", "n2_pivots", "c2_pivots", "x1_norm_pivots", "weights", "tunable")
             new("TwoStageDesignSurvival",
                 n1 = design@n1, c1f = design@c1f, c1e = design@c1e, n2_pivots = design@n2_pivots,
                 c2_pivots = design@c2_pivots,
                 x1_norm_pivots = design@x1_norm_pivots, weights = design@weights,
-                tunable = tunable, event_rate = event_rate)
+                tunable = design@tunable, event_rate = event_rate)
           })
 
 #' @param event_rate probability that a subject in either group will eventually have an event
@@ -210,13 +208,27 @@ setGeneric("tunable_parameters", function(object, ...) standardGeneric("tunable_
 #' @export
 setMethod("tunable_parameters", signature("TwoStageDesign"),
           function(object, ...) {
-              res <- numeric(0)
-              for (i in 1:length(object@tunable)) {
-                  if (object@tunable[i])
-                      res <- c(res, slot(object, names(object@tunable)[i]))
-              }
-              return(res)
+              tunable_names <- names(object@tunable)[object@tunable]
+              res <- lapply(tunable_names, function(nm) slot(object, nm))
+              return(as.numeric(unlist(res)))
           })
+
+# internal: replace the values of all tunable slots by the entries of 'params'
+update_tunable_slots <- function(object, params) {
+    tunable_names <- names(object@tunable)[object@tunable]
+    lens          <- vapply(tunable_names, function(nm) length(slot(object, nm)), integer(1))
+    if (length(params) != sum(lens))
+        stop(sprintf("params must be of length %i (number of tunable parameters), but is of length %i",
+                     sum(lens), length(params)))
+    res <- object
+    idx <- 0L
+    for (i in seq_along(tunable_names)) {
+        k <- lens[[i]]
+        slot(res, name = tunable_names[i]) <- params[idx + seq_len(k)]
+        idx <- idx + k
+    }
+    return(res)
+}
 
 #' @param params vector of design parameters, must be in same order as returned
 #'   by \cr
@@ -225,18 +237,7 @@ setMethod("tunable_parameters", signature("TwoStageDesign"),
 #' @rdname tunable_parameters
 #' @export
 setMethod("update", signature("TwoStageDesign"),
-          function(object, params, ...) {
-              tunable_names <- names(object@tunable)[object@tunable]
-              res <- object
-              idx <- 1
-              for (i in 1:length(tunable_names)) {
-                  slotname <- tunable_names[i]
-                  k <- length(slot(object, name = slotname))
-                  slot(res, name = slotname) <- params[idx:(idx + k - 1)]
-                  idx <- idx + k
-              }
-              return(res)
-          })
+          function(object, params, ...) update_tunable_slots(object, params))
 
 
 
@@ -275,17 +276,32 @@ setMethod("update", signature("TwoStageDesign"),
 #' @export
 setGeneric("make_tunable", function(x, ...) standardGeneric("make_tunable"))
 
+# internal: set the tunability status of the slots named in 'params'; misspelled
+# names raise an error instead of being silently ignored
+set_tunable_status <- function(x, params, status) {
+    unknown <- setdiff(params, names(x@tunable))
+    if (length(unknown) > 0)
+        stop("unknown design parameter(s): ", paste(unknown, collapse = ", "))
+    x@tunable[params] <- status
+    return(x)
+}
+
+# internal: names of the (unevaluated) arguments in '...' as character vector
+dots_names <- function(dots_call) {
+    vapply(
+        as.list(dots_call)[-1],
+        function(e) if (is.character(e)) e else paste(deparse(e), collapse = ""),
+        character(1)
+    )
+}
+
 #' @rdname make_tunable
 #' @export
 setMethod("make_tunable", signature("TwoStageDesign"),
           function(x, ...) {
-              params <- sapply(substitute(list(...))[-1], deparse)
-              res    <- x
-              for (i in 1:length(x@tunable)) {
-                  if (names(x@tunable)[i] %in% params)
-                      res@tunable[i] <- TRUE
-              }
-              return(res)
+              dots   <- substitute(list(...)) # unevaluated arguments
+              params <- dots_names(dots)
+              set_tunable_status(x, params, TRUE)
           })
 
 
@@ -298,13 +314,9 @@ setGeneric("make_fixed", function(x, ...) standardGeneric("make_fixed"))
 #' @export
 setMethod("make_fixed", signature("TwoStageDesign"),
           function(x, ...) {
-              params <- sapply(substitute(list(...))[-1], deparse)
-              res    <- x
-              for (i in 1:length(x@tunable)) {
-                  if (names(x@tunable)[i] %in% params)
-                      res@tunable[i] <- FALSE
-              }
-              return(res)
+              dots   <- substitute(list(...)) # unevaluated arguments
+              params <- dots_names(dots)
+              set_tunable_status(x, params, FALSE)
           })
 
 
@@ -336,15 +348,13 @@ setGeneric("n2", function(d, x1, ...) standardGeneric("n2"))
 #' @export
 setMethod("n2", signature("TwoStageDesign", "numeric"),
           function(d, x1, round = TRUE, ...) {
-              res <- ifelse(x1 < d@c1f | x1 > d@c1e, 0, 1) *
-                  pmax(
-                      0,
-                      stats::splinefun(
-                          scaled_integration_pivots(d),
-                          d@n2_pivots,
-                          method = "monoH.FC"
-                        )(x1)
-                  )
+              # the spline is only constructed once and only evaluated inside
+              # the continuation region (n2 is zero outside)
+              res    <- numeric(length(x1))
+              inside <- which(x1 >= d@c1f & x1 <= d@c1e)
+              if (length(inside) > 0)
+                  res[inside] <- pmax(0, design_spline(d, d@n2_pivots)(x1[inside]))
+              res[is.na(x1)] <- NA_real_
               if (round)
                   res <- round(res)
               return(res)
@@ -363,8 +373,7 @@ setMethod("n2", signature("TwoStageDesign", "numeric"),
 #' real sample sizes to allow smooth optimization (cf. \code{\link{minimize}} for
 #' details).
 #' The optional argument \code{round} allows to switch between the internal
-#' real representation and a rounded version (rounding to the next positive
-#' integer).
+#' real representation and a rounded version (rounding to the nearest integer).
 #'
 #' @examples
 #' design <- TwoStageDesign(
@@ -412,20 +421,6 @@ setMethod("n", signature("TwoStageDesign", "numeric"),
 #' \code{c2} returns the stage-two critical value conditional on the stage-one test
 #' statistic.
 #'
-#' @examples
-#' design <- TwoStageDesign(
-#'   n1    = 25,
-#'   c1f   = 0,
-#'   c1e   = 2.5,
-#'   n2    = 50,
-#'   c2    = 1.96,
-#'   order = 7L
-#' )
-#'
-#' c2(design, 2.2) # 1.96
-#' c2(design, 3.0) # -Inf
-#' c2(design, -1.0) # Inf
-#'
 #' @template d
 #' @template x1
 #' @template dotdotdot
@@ -456,16 +451,18 @@ setGeneric("c2", function(d, x1, ...) standardGeneric("c2"))
 #' @rdname critical-values
 #' @export
 setMethod("c2", signature("TwoStageDesign", "numeric"),
-          function(d, x1, ...) ifelse(x1 < d@c1f, Inf,
-                                      ifelse(x1 > d@c1e, -Inf,
-                                             stats::splinefun(
-                                                 scaled_integration_pivots(d),
-                                                 d@c2_pivots,
-                                                 method = "monoH.FC"
-                                                 )(x1)
-                                             )
-          )
-)
+          function(d, x1, ...) {
+              # Inf below c1f (reject never), -Inf above c1e (reject always),
+              # monotone spline through the pivots in between
+              res    <- numeric(length(x1))
+              inside <- which(x1 >= d@c1f & x1 <= d@c1e)
+              if (length(inside) > 0)
+                  res[inside] <- design_spline(d, d@c2_pivots)(x1[inside])
+              res[which(x1 < d@c1f)] <- Inf
+              res[which(x1 > d@c1e)] <- -Inf
+              res[is.na(x1)]         <- NA_real_
+              return(res)
+          })
 
 
 
@@ -480,14 +477,20 @@ setMethod("scaled_integration_pivots", signature("TwoStageDesign"),
               return(h * d@x1_norm_pivots + (h + d@c1f))
           })
 
+# internal, monotone spline through the values 'y' given on the integration
+# pivots of the design; construct once and evaluate on a whole vector
+design_spline <- function(d, y) {
+    stats::splinefun(scaled_integration_pivots(d), y, method = "monoH.FC")
+}
+
 
 design2str <- function(design, optimized = FALSE, no_pivots = 100) {
-  
+
   if (is(design, 'TwoStageDesignSurvival')) {
     n2_piv <- seq(design@c1f, design@c1e, length.out = no_pivots)
     n2range <- range(n2(design, n2_piv))
     if (is(design, 'OneStageDesign')) {
-      return(sprintf("OneStageDesignSurvival<%sn_events=%i;c=%.2f>", 
+      return(sprintf("OneStageDesignSurvival<%sn_events=%i;c=%.2f>",
                                                      if (optimized) "optimized;" else "", n1(design), design@c1f))
     } else {
       return(sprintf(
@@ -498,7 +501,7 @@ design2str <- function(design, optimized = FALSE, no_pivots = 100) {
       ))}
   }
   if (is(design, 'OneStageDesign')) {
-    return(sprintf("OneStageDesign<%sn=%i;c=%.2f>", 
+    return(sprintf("OneStageDesign<%sn=%i;c=%.2f>",
                    if (optimized) "optimized;" else "", n1(design), design@c1f))
     }
     n2_piv <- seq(design@c1f, design@c1e, length.out = no_pivots)
@@ -564,12 +567,13 @@ setMethod("plot", signature(x = "TwoStageDesign"),
               x4   <- seq(x@c1f - (x@c1e - x@c1f)/5, x@c1e + (x@c1e - x@c1f)/5, length.out = k)
               if (is(x, "TwoStageDesignSurvival")) caption <- "Half of number of events" # nocov
               else caption <- "Group-wise sample size" # nocov
-              graphics::plot(x1, sapply(x1, function(z) n(x, z, round = rounded)), type = 'l',
+              n_middle <- n(x, x1, round = rounded) # n() is vectorised
+              graphics::plot(x1, n_middle, type = 'l',
                              xlim = c(min(x4), max(x4)),
-                             ylim = c(0, 1.05 * max(sapply(x1, function(z) n(x, z, round = rounded)))),
+                             ylim = c(0, 1.05 * max(n_middle)),
                              main = caption, ylab = "" , xlab = expression("x"[1]))
-              graphics::lines(x2, sapply(x2, function(z) n(x, z, round = rounded)))
-              graphics::lines(x3, sapply(x3, function(z) n(x, z, round = rounded)))
+              graphics::lines(x2, n(x, x2, round = rounded))
+              graphics::lines(x3, n(x, x3, round = rounded))
               graphics::plot(x4, c2(x, x4), type = 'l', main = "Stage-two critical value",
                              ylab = "", xlab = expression("x"[1]))
               if (length(scores) > 0) {
@@ -629,7 +633,8 @@ setMethod("summary", signature("TwoStageDesign"),
               }
               res <- list(
                   design        = object,
-                  uncond_scores = sapply(uncond_scores, function(s) evaluate(s, object, optimization = !rounded, ...)),
+                  # note: the scores themselves must not be passed on via '...'
+                  uncond_scores = sapply(uncond_scores, function(s) evaluate(s, object, optimization = !rounded)),
                   cond_scores   = cond_scores,
                   n1            = object@n1,
                   c1f           = object@c1f,
@@ -651,7 +656,7 @@ setMethod("summary", signature("TwoStageDesign"),
 #' @rawNamespace S3method(print, TwoStageDesignSummary)
 print.TwoStageDesignSummary <- function(x, ..., rounded = TRUE) {
     space <- 3
-    
+
     if (is(x$design, "TwoStageDesignSurvival")) {
       cat("For two-armed trials: nevs denotes half of the overall number of required events. nrec denotes the resulting group-wise sample size.\n\n")
       cat(glue::glue(
@@ -667,9 +672,10 @@ print.TwoStageDesignSummary <- function(x, ..., rounded = TRUE) {
       ))
     }
     x1 <- c(x$c1f - sqrt(.Machine$double.eps), scaled_integration_pivots(x$design), x$c1e + sqrt(.Machine$double.eps))
-    n2_nr <- sapply(x1,function(y) n2(x$design, y, round=FALSE))
-    n2 <- sapply(x1, function(y) n2(x$design, y))
-    c2 <- sapply(x1, function(y) c2(x$design, y))
+    # n2 and c2 are vectorised
+    n2_nr <- n2(x$design, x1, round = FALSE)
+    n2    <- n2(x$design, x1)
+    c2    <- c2(x$design, x1)
 
     # compute maximal length of rownames
     maxlength <- max(nchar('futility'),
@@ -709,7 +715,7 @@ print.TwoStageDesignSummary <- function(x, ..., rounded = TRUE) {
                    '\n\r'))
 
     len <- maxlength - nchar('n2(x1)')
-    
+
     if (is(x$design, "TwoStageDesignSurvival")) {
       cat(glue::glue(' ','{strrep(" ", len)}','nevs2(x1):',
                      ' {sprintf("%5i", n2[1])} | ',
@@ -718,7 +724,7 @@ print.TwoStageDesignSummary <- function(x, ..., rounded = TRUE) {
                                collapse = " ")}',
                      ' | {sprintf("%5i", n2[length(n2)])}',
                      '\n\r'))
-      
+
       cat(glue::glue(' ','{strrep(" ", len)}','nrec2(x1):',
                      ' {sprintf("%5i", round(n2_nr[1]/x$design@event_rate))} | ',
                      '{paste0(
@@ -739,12 +745,14 @@ print.TwoStageDesignSummary <- function(x, ..., rounded = TRUE) {
     if (length(x$cond_scores) > 0) {
         for (i in 1:length(x$cond_scores)) {
             len <- maxlength - nchar(names(x$cond_scores)[i]) - nchar('(x1)')
+            # conditional scores are evaluated on the whole grid at once
+            cs_values <- evaluate(x$cond_scores[[i]], x$design, x1)
             cat(glue::glue('{strrep(" ", len)}','{names(x$cond_scores)[i]}(x1):', '{strrep(" ", space)}',
-                           ' {sprintf("%5.2f", evaluate(x$cond_scores[[i]], x$design, x1[1]))} | ',
+                           ' {sprintf("%5.2f", cs_values[1])} | ',
                            '{paste0(
-                           sprintf("%5.2f", sapply(x1[-c(1, length(x1))], function(y) evaluate(x$cond_scores[[i]], x$design, y))),
+                           sprintf("%5.2f", cs_values[-c(1, length(cs_values))]),
                            collapse = " ")}',
-                           ' | {sprintf("%5.2f", evaluate(x$cond_scores[[i]], x$design, x1[length(x1)]))}',
+                           ' | {sprintf("%5.2f", cs_values[length(cs_values)])}',
                            '\n\r'))
         }
     }
@@ -808,8 +816,10 @@ setMethod("simulate", signature("TwoStageDesign", "numeric"),
               res$n2     <- n2(object, res$x1, round = TRUE)
               res$c2     <- c2(object, res$x1)
 
+              # x2 is also drawn for trials that stop early (n2 = 0); for those
+              # c2 is +-Inf, i.e. 'reject' is determined by the stage-one decision
               res$x2     <- simulate(dist, nsim = nsim, n = res$n2, theta = theta)
-              res$reject <- res$x2 > res$c2 # check > vs. >=
+              res$reject <- res$x2 > res$c2 # rejection if x2 > c2
 
               return(res)
           })

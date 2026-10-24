@@ -1,5 +1,28 @@
 # adoptr (development version)
 
+## Bug fixes
+
+* `Binomial`: the null standard deviation of the test statistic is now computed per `theta`. Before, it was taken from the first element only, which gave wrong results for priors with several support points. Results for such priors change.
+* `NestedModels`/`ANOVA`: pdf and cdf are now vectorized in `x`, `n` and `theta`. Before, a scalar `x` with several `theta` values (e.g. in `posterior()`) gave wrong results.
+* `Student`, `NestedModels`/`ANOVA`: degrees of freedom are computed element-wise, so `simulate()` works with a vector of sample sizes.
+* `summary()` for `TwoStageDesign` no longer passes the scores on to `evaluate()`, which made `summary(design, "Power" = pow)` fail.
+* `n2()` for `OneStageDesign` now returns one value per `x1`, and `n2(<design>, c(-Inf, Inf))` returns `0` instead of `NaN`.
+* `SurvivalDesign()` and design conversions keep the tunability status (`make_fixed()`).
+
+## Performance
+
+* `ConditionalPower` and `Power` with a `PointMassPrior` are computed vectorized over all stage-one points (one pdf/cdf call instead of one `posterior()`/`expectation()` per pivot). This speeds up `minimize()`.
+* `n2()` and `c2()` build the spline once per call. `MaximumSampleSize` and the `plot()`/`summary()` methods use vectorized calls.
+* `expand.grid()` is replaced by a lightweight grid in the predictive pdf/cdf. `minimize()` builds the design object once per parameter vector.
+
+## Other changes
+
+* Stricter input checks: length of `params` in `update()`, unknown names in `make_fixed()`/`make_tunable()`, scalar `n2_pivots` in `GroupSequentialDesign`, `info_ratio` in (0, 1) in `get_initial_design()`, `p_outer > p_inner` in `NestedModels`, at least two groups in `ANOVA` and `Pearson2xK`.
+* Clearer errors for `posterior()`/`condition()` on a `PointMassPrior` when the observation has zero likelihood or the interval is empty. `ContinuousPrior(tighten_support = TRUE)` always terminates.
+* `minimize()` also warns on negative `nloptr` status codes.
+* Custom `DataDistribution` classes must be vectorized in `x`, `n` and `theta`.
+* Documentation updates (distributions, scores, rounding, `bounds()` example).
+
 # adoptr 1.1.2
 
 * fix documentation problem according to CRAN checks

@@ -35,6 +35,5 @@ setMethod("evaluate",
           signature("MaximumSampleSize", "TwoStageDesign"),
           function(s, design, optimization = FALSE, ...) {
             x1 <- seq(design@c1f, design@c1e, length.out = 1000)
-            ss <- sapply(x1, function(z) adoptr:::n(design, z, round = !optimization))
-            return(max(ss))
+            return(max(n(design, x1, round = !optimization)))
           })

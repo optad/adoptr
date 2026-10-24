@@ -69,16 +69,28 @@ minimize <- function(
 
     args <- c(as.list(environment()), list(...))
 
+    # nloptr evaluates objective and constraints at the same parameter vector
+    # one after the other; the design object is therefore only built once per
+    # parameter vector
+    cache <- new.env(parent = emptyenv())
+    design_from_params <- function(params) {
+        if (is.null(cache$params) || !identical(cache$params, params)) {
+            cache$design <- update(initial_design, params)
+            cache$params <- params
+        }
+        return(cache$design)
+    }
+
     f_obj <- function(params) {
         evaluate(
             objective,
-            update(initial_design, params),
+            design_from_params(params),
             optimization = TRUE # evaluate in optimization context!
         )
     }
 
     g_cnstr <- function(params) {
-        design <- update(initial_design, params)
+        design <- design_from_params(params)
         user_cnstr <- evaluate(subject_to, design, optimization = TRUE)
         constraints <- c(
           user_cnstr,
@@ -101,9 +113,11 @@ minimize <- function(
         ...
     )
 
-    if (res$status == 5 | res$status == 6)
+    # 5: maximal number of evaluations, 6: maximal time reached,
+    # negative values: nloptr reports a failure
+    if (res$status == 5 | res$status == 6 | res$status < 0)
         warning(res$message)
-    
+
     if(check_constraints){
       new_des <- update(initial_design, res$solution)
       for(constr in subject_to@unconditional_constraints){
@@ -119,7 +133,7 @@ minimize <- function(
                             utils::capture.output(show(constr)), format(0.01)))
           }
         }
-        
+
       }
       for(constr in subject_to@conditional_constraints){
         grid <- seq(new_des@c1f, new_des@c1e, length.out = 10)
@@ -135,7 +149,7 @@ minimize <- function(
                             utils::capture.output(show(constr)), format(0.01)))
           }
         }
-        
+
       }
     }
 
@@ -158,7 +172,7 @@ setMethod("print", signature("adoptrOptimizationResult"),
 #'
 #' The optimization method \code{\link{minimize}} requires an initial
 #' design for optimization.
-#' This function provides a variety of possibilities to hand-craft designs that 
+#' This function provides a variety of possibilities to hand-craft designs that
 #' fulfill type I error and type II error constraints which may be used as initial designs.
 #'
 #' @param theta the alternative effect size in the normal case, the
@@ -166,12 +180,12 @@ setMethod("print", signature("adoptrOptimizationResult"),
 #' @param alpha maximal type I error rate
 #' @param beta maximal type II error rate
 #' @param type_design type of design
-#' @param type_c2 either linear-decreasing c2-function according to inverse normal 
+#' @param type_c2 either linear-decreasing c2-function according to inverse normal
 #' combination test or constant c2
 #' @param type_n2 design of n2-function
 #' @param dist distribution of the test statistic
 #' @param cf first-stage futility boundary
-#' @param ce first-stage efficacy boundary. Note that specifying this boundary 
+#' @param ce first-stage efficacy boundary. Note that specifying this boundary
 #' implies that the type I error constraint might not be fulfilled anymore
 #' @param info_ratio the ratio between first and second stage sample size
 #' @param slope slope of n2 function
@@ -188,6 +202,8 @@ setMethod("print", signature("adoptrOptimizationResult"),
 #' constraint may not be fulfilled.
 #' IMPORTANT: When using the t-distribution or ANOVA, the design does probably
 #' not keep the type I and type II error, only approximate designs are returned.
+#' For time-to-event endpoints (\code{dist = Survival(...)}), \code{theta} is the
+#' hazard ratio and has to be larger than one.
 #'
 #' @examples
 #' init <- get_initial_design(
@@ -203,9 +219,9 @@ setMethod("print", signature("adoptrOptimizationResult"),
 #'    slope=23,
 #'    weight = 1/sqrt(3)
 #' )
-#' 
+#'
 #' @return An object of class \code{\link{TwoStageDesign}}.
-#' 
+#'
 #' @export
 get_initial_design <- function(theta,
                                alpha,
@@ -220,29 +236,29 @@ get_initial_design <- function(theta,
                                slope,
                                weight = sqrt(info_ratio),
                                order = 7L,...) {
-  
+
   # match the inputs
   type_design <- match.arg(type_design)
-  
+
   # overwrite the distributions that depend on n under the null
   if(is(dist, "Student")){
     dist <- Normal(two_armed = dist@two_armed)
   }
-  
+
   # default value for n when computing rejection boundaries. Only matters for ANOVA
   n_H0 <- ifelse(is(dist, "NestedModels"), 30, 1)
-  
+
   # check that theta is correct
   theta2 <- ifelse(is(dist, "Survival"), log(theta), theta)
   theta_null <- ifelse(is(dist, "Survival"), 1, 0)
-  
-  if(theta2 < 0) stop("Effect size must not be smaller than zero!")
-  
+
+  if(is.na(theta2) || theta2 < 0) stop("Effect size must not be smaller than zero!")
+
   # compute cf depending on the current distribution
   if(missing(cf)){
     cf <- quantile(dist, 0.5, n_H0, theta_null)
   }
-  
+
   # raise warnings if c2 or n2 are mistakenly specified
   if(type_design == "group-sequential" || type_design == "one-stage") {
     if(type_design == "one-stage") {
@@ -254,26 +270,26 @@ get_initial_design <- function(theta,
       warning("The type of the n2 function is not relevant for one-stage or group-sequential designs.")
     }
   }
-  
+
   type_c2 <- match.arg(type_c2)
   type_n2 <- match.arg(type_n2)
-  
+
   # rename some variables
   power <- 1 - beta
   w1 <- weight
   w2 <- sqrt(1 - w1**2)
-  
+
   # check for valid inputs
-  if(any(alpha <= 0, alpha >= 1, beta <= 0, beta >= 1, info_ratio < 0, info_ratio > 1, weight >= 1, weight <= 0)) {
+  if(any(alpha <= 0, alpha >= 1, beta <= 0, beta >= 1, info_ratio <= 0, info_ratio >= 1, weight >= 1, weight <= 0)) {
     stop("alpha, beta, information ratio or weights must be in (0, 1)!")}
-  
+
   if(!missing(ce)) {
     if(ce < cf) {
       stop("Efficacy boundary must not be smaller than futility boundary!")
     }
   }
-  
-  
+
+
   # c2 and n2 type not relevant for one-stage designs, so we first finish that case
   if(type_design == "one-stage") {
     ce <- quantile(dist, 1 - alpha, n_H0, theta_null)
@@ -284,7 +300,7 @@ get_initial_design <- function(theta,
     ifelse(is(dist, "Survival"), return(OneStageDesign(n, ce, event_rate=dist@event_rate)),
            return(OneStageDesign(n, ce)))
   }
-  
+
   # case 1: constant c2 function
   if(type_c2 == "constant") {
     # we assume ce = c2
@@ -322,11 +338,11 @@ get_initial_design <- function(theta,
         }
         c2 <- stats::uniroot(find_c, interval = c(cf, 5), extendInt = "yes")$root
       } else {
-        c2 <- stats::uniroot(find_c2, interval = c(cf, 5),extendInt = "yes")$root
+        c2 <- c_try 
       }
     }
   }
-  
+
   # case2: linear decreasing c2 function by inverse normal combination
   if(type_c2 == "linear_decreasing") {
     # we assume ce=c*, where c* is the boundary for Z*=w_1*Z_1+w_2*Z_2
@@ -356,9 +372,10 @@ get_initial_design <- function(theta,
         warning("Type I error constraint cannot be fulfilled.")
         c <- ce
       } else {
-        c <- stats::uniroot(find_ce, interval = c(cf, 5), extendInt = "yes")$root}
+        c <- c_try 
+      }
     }
-    
+
     # we need to evaluate this function at each pivot
     critical_values <- function(z) {
       (c - w1 * z) / sqrt(1 - w1**2)
@@ -368,7 +385,7 @@ get_initial_design <- function(theta,
     newnodes <- h * oldnodes + (h + cf)
     c2 <- sapply(newnodes, critical_values)
   }
-  
+
   # for group-sequential designs, n2 is constant. We choose n so that the toer and tter are not exceeded
   if(type_design == "group-sequential") {
     if(type_c2 == "constant") {
@@ -396,12 +413,12 @@ get_initial_design <- function(theta,
     n1 <- info_ratio * n
     n2 <- (1-info_ratio) * n
     # if(length(c2)!=1) n2 <- rep(n2,order)
-    
-    ifelse(is(dist, "Survival"), 
-           return(GroupSequentialDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)), 
+
+    ifelse(is(dist, "Survival"),
+           return(GroupSequentialDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
            return(GroupSequentialDesign(n1, cf, ce, n2, c2, order = order)))
   }
-  
+
   # for two-stage designs, the four different n2-designs need to be considered
   if(type_design == "two-stage") {
     # constant n2 is the same as group-sequential, but returns a two-stage instead of a group sequential design
@@ -431,18 +448,18 @@ get_initial_design <- function(theta,
       n1 <- info_ratio * n
       n2 <- (1 - info_ratio) * n
       if(length(c2) != 1) n2 <- rep(n2, order)
-      
-      ifelse(is(dist,"Survival"), 
+
+      ifelse(is(dist,"Survival"),
              return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
              return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
     }
-      
-    
-    # the optimal n2 function is evaluated at each pivot and therefore, it is not constant 
+
+
+    # the optimal n2 function is evaluated at each pivot and therefore, it is not constant
     # first stage sample size is determined like before.
     if(any(type_n2 == "optimal", type_n2=="linear_increasing", type_n2=="linear_decreasing")) {
       if(length(c2) == 1) c2 <- rep(c2,order)
-      
+
       if(type_c2 == "constant") {
         find_n <- function(n) {
           integrand_n <- function(z) {
@@ -453,7 +470,7 @@ get_initial_design <- function(theta,
             stats::integrate(integrand_n, cf, ce)$value - power
         }
       }
-      
+
       if(type_c2 == "linear_decreasing") {
         #first, find the n1 sample size. We use the same sample size as we have under constant n2-function
         find_n <- function(n) {
@@ -467,7 +484,7 @@ get_initial_design <- function(theta,
       }
       n <- stats ::uniroot(find_n, interval = c(0, 1000), extendInt = "upX")$root
       n1 <- info_ratio * n
-      
+
       # find the right value of the n2 function at each pivot
       find_n2 <- function(n2, pivot) {
         integrand_n2 <- function(z) {
@@ -482,50 +499,49 @@ get_initial_design <- function(theta,
         n_try <- suppressWarnings(try(stats::uniroot(f = find_n2,
                                                      interval = c(0, 1000),
                                                      extendInt = "upX",
-                                                     pivot = c2[i])$root, 
+                                                     pivot = c2[i])$root,
                                       silent=TRUE))
-        
+
         if("try-error" %in% class(n_try) & type_n2 == "optimal") {
           stop("Optimal n2 function cannot be calculated. Please reduce efficacy boundary or the information ratio.") # nocov
-        } else if("try-error" %in% class(n_try) & 
-                  (type_n2 == "linear_decreasing" || 
+        } else if("try-error" %in% class(n_try) &
+                  (type_n2 == "linear_decreasing" ||
                    type_n2 == "linear_increasing") & missing(slope)) {
           stop("Please specify a slope or reduce efficacy boundary or the information ratio.") # nocov
-        } else if("try-error" %in% class(n_try) & 
-                  (type_n2 == "linear_decreasing" || 
+        } else if("try-error" %in% class(n_try) &
+                  (type_n2 == "linear_decreasing" ||
                    type_n2 == "linear_increasing") & !missing(slope)) {
           n2[i] <- 0.1 # nocov
         } else {
-          n2[i] <- stats::uniroot(f = find_n2, interval = c(0, 1000), extendInt = "upX",
-                                  pivot = c2[i])$root
+          n2[i] <- n_try 
         }
       }
-      
+
       if (type_n2 == "optimal") {
-        ifelse(is(dist,"Survival"), 
+        ifelse(is(dist,"Survival"),
                return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
                return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
       }
-      
+
       if(type_n2 == "linear_decreasing") {
         interim_design <- TwoStageDesign(n1, cf, ce, n2, c2)
         if(missing(slope)) {
           #find the minimum and maximal values of n2
           n2_min <- n2(interim_design, ce)
           n2_max <- n2(interim_design, cf)
-          
+
           #compute the slope of n2 function
           slope <- (n2_min - n2_max) / (ce - cf)
           if(slope == 0) {
             slope <- -n2_max / (ce - cf) # nocov
           }
         }
-        
+
         if(slope > 0){
           stop("For linear_decreasing, slope needs to be smaller zero")
         }
         start_value <- -slope * ce + .1
-        
+
         #find y-intercept of n2 function
         find_y_intercept <- function(b, slope ){
           integrand_b <- function(z) {
@@ -535,13 +551,13 @@ get_initial_design <- function(theta,
           (1 - cumulative_distribution_function(dist, ce, n1, theta)) +
             stats::integrate(integrand_b, cf, ce)$value - power
         }
-        
+
         t <- suppressWarnings(try(stats::uniroot(find_y_intercept,
                                                  interval = c(start_value, 1000),
                                                  extendInt = "upX",
-                                                 slope = slope)$root, 
+                                                 slope = slope)$root,
                                   silent = TRUE))
-        
+
         if("try-error" %in% class(t)) {
           warning("Absolute value of slope too high. It was automatically reduced.")
         }
@@ -555,30 +571,28 @@ get_initial_design <- function(theta,
                                     silent = TRUE))
         }
         if(slope > 0) {# nocov start
-          ifelse(is(dist,"Survival"), 
+          ifelse(is(dist,"Survival"),
                  return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
                  return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))# nocov end
         }
-        
-        y_intercept <- stats::uniroot(find_y_intercept,
-                                      interval = c(start_value, 1000),
-                                      extendInt = "upX",slope = slope)$root
-        
+
+        y_intercept <- t 
+
         n2func <- function(z) {
           slope * z + y_intercept
         }
-        
+
         oldnodes <- GaussLegendreRule(as.integer(order))$nodes
         h <- (ce - cf) / 2
         newnodes <- h * oldnodes + (h + cf)
-        
+
         #evaluate n2 function at pivots
         n2 <- n2func(newnodes)
-        ifelse(is(dist,"Survival"), 
+        ifelse(is(dist,"Survival"),
                return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
                return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
       }
-      
+
       if(type_n2 == "linear_increasing") {
         #find the minimum and maximal values of n2
         interim_design <- TwoStageDesign(n1, cf, ce, n2, c2)
@@ -586,8 +600,8 @@ get_initial_design <- function(theta,
           #find the minimum and maximal values of n2
           n2_min <- n2(interim_design, ce)
           n2_max <- n2(interim_design, cf)
-          
-          
+
+
           #compute the slope of n2 function
           slope <- (n2_max - n2_min) / (ce - cf)
           if(slope == 0) {
@@ -597,8 +611,8 @@ get_initial_design <- function(theta,
         if(slope < 0) {
           stop("For linear_increasing, slope needs to be greater zero")
         }
-        
-        
+
+
         #find y-intercept of n2 function
         find_y_intercept <- function(b, slope) {
           integrand_b <- function(z){
@@ -608,17 +622,17 @@ get_initial_design <- function(theta,
           (1 - cumulative_distribution_function(dist, ce, n1, theta)) +
             stats::integrate(integrand_b, cf, ce)$value - power
         }
-        
+
         start_value <- -slope * cf + .1
-        
+
         #it is possible that the n2 function gets negative what leads to errors,
         #so we need to reduce the slope to be positive
         t <- suppressWarnings(try(stats::uniroot(find_y_intercept,
                                                  interval = c(start_value, 1000),
                                                  extendInt = "upX",
-                                                 slope = slope)$root, 
+                                                 slope = slope)$root,
                                   silent = TRUE))
-        
+
         if("try-error" %in% class(t)) {
           warning("Absolute value of slope too high. It was automatically reduced.")
         }
@@ -628,31 +642,30 @@ get_initial_design <- function(theta,
           t <- suppressWarnings(try(stats::uniroot(find_y_intercept,
                                                    interval = c(start_value, 1000),
                                                    extendInt = "upX",
-                                                   slope = slope)$root, 
+                                                   slope = slope)$root,
                                     silent = TRUE))
         }
-        
+
         if(slope < 0) {# nocov start
-          ifelse(is(dist,"Survival"), 
+          ifelse(is(dist,"Survival"),
                  return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
-                 return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))# nocov end
+                 return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
+                 # nocov end
         }
-        
-        y_intercept <- stats::uniroot(find_y_intercept,
-                                      interval = c(start_value, 1000),
-                                      extendInt = "upX", slope = slope)$root
-        
+
+        y_intercept <- t 
+
         n2func <- function(z) {
           slope * z + y_intercept
         }
-        
+
         oldnodes <- GaussLegendreRule(as.integer(order))$nodes
         h <- (ce - cf) / 2
         newnodes <- h * oldnodes + (h + cf)
-        
+
         #evaluate n2 function at pivots
         n2 <- n2func(newnodes)
-        ifelse(is(dist,"Survival"), 
+        ifelse(is(dist,"Survival"),
                return(TwoStageDesign(n1, cf, ce, n2, c2, order = order, event_rate = dist@event_rate)),
                return(TwoStageDesign(n1, cf, ce, n2, c2, order = order)))
       }

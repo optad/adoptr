@@ -140,8 +140,10 @@ setMethod("evaluate", signature("IntegralScore", "TwoStageDesign"),
         epsilon <- sqrt(.Machine$double.eps)
         c1f     <- design@c1f; c1e <- design@c1e
         n1      <- if (optimization) design@n1 else n1(design, round = TRUE)
-        pr_ef   <- predictive_cdf(s@data_distribution, s@prior, c1f, n1)
-        pr_ee   <- 1 - predictive_cdf(s@data_distribution, s@prior, c1e, n1)
+        # one call for both early-stopping boundaries
+        pr_stop <- predictive_cdf(s@data_distribution, s@prior, c(c1f, c1e), n1)
+        pr_ef   <- pr_stop[1]
+        pr_ee   <- 1 - pr_stop[2]
         if (optimization == TRUE) {
             cs             <- .evaluate(s@cs, design)
             early_stopping <- pr_ef * cs$early_futility + pr_ee * cs$early_efficacy

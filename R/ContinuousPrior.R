@@ -12,7 +12,7 @@
 #'     approximating integrals over \code{delta}
 #'
 #' @seealso Discrete priors are supported via \code{\link{PointMassPrior}}
-#' 
+#'
 #' @include Prior.R
 #'
 #' @aliases ContinuousPrior
@@ -61,10 +61,11 @@ ContinuousPrior <- function(pdf,
 
     if (tighten_support) {
         eps <- .001
-        while (pdf(support[1] + eps) < .Machine$double.eps^2) {
+        # the additional bounds guarantee termination if the pdf vanishes everywhere
+        while (support[1] + eps < support[2] && pdf(support[1] + eps) < .Machine$double.eps^2) {
             support[1] <- support[1] + eps
         }
-        while (pdf(support[2] - eps) < .Machine$double.eps^2) {
+        while (support[2] - eps > support[1] && pdf(support[2] - eps) < .Machine$double.eps^2) {
             support[2] <- support[2] - eps
         }
         norm    <- stats::integrate(pdf, support[1], support[2], abs.tol = .00001)$value
@@ -123,7 +124,7 @@ setMethod("condition", signature("ContinuousPrior", "numeric"),
         if (diff(interval) < 0) stop("interval[2] must be larger or equal to interval[1]")
         interval[1] <- max(interval[1], dist@support[1])
         interval[2] <- min(interval[2], dist@support[2])
-        if (diff(interval) < 0) stop("resulting interval is empty")
+        if (diff(interval) <= 0) stop("resulting interval is empty")
         z       <- stats::integrate(dist@pdf, interval[1], interval[2], abs.tol = .001)$value
         new_pdf <- function(theta) ifelse(interval[1] <= theta & theta <= interval[2], dist@pdf(theta)/z, 0)
         h_old   <- (dist@support[2] - dist@support[1]) / 2
@@ -136,6 +137,17 @@ setMethod("condition", signature("ContinuousPrior", "numeric"),
     })
 
 
+# internal: equidistant grid and (renormalized) point masses used for the crude
+# integral approximation in predictive_pdf and predictive_cdf
+continuous_prior_grid <- function(prior, k) {
+    piv  <- seq(prior@support[1], prior@support[2], length.out = k)
+    mass <- prior@pdf(piv) # pdf is required to be vectorized
+    if (length(mass) != length(piv)) # fall back for pdfs that are not
+        mass <- sapply(piv, prior@pdf)
+    list(piv = piv, mass = mass / sum(mass)) # (renormalize!)
+}
+
+
 #' @examples
 #' tmp <- ContinuousPrior(function(x) dunif(x, .2, .4), c(.2, .4))
 #' predictive_pdf(Normal(), tmp, 2, 20)
@@ -146,11 +158,9 @@ setMethod("condition", signature("ContinuousPrior", "numeric"),
 #' @export
 setMethod("predictive_pdf", signature("DataDistribution", "ContinuousPrior", "numeric"),
     function(dist, prior, x1, n1, k = 10*(prior@support[2] - prior@support[1]) + 1, ...) {
-        piv  <- seq(prior@support[1], prior@support[2], length.out = k)
-        mass <- sapply(piv, prior@pdf)
-        mass <- mass / sum(mass) # (renormalize!)
-        grid <- expand.grid(x1 = x1, piv = piv)
-        (matrix(probability_density_function(dist, grid$x1, n1, grid$piv), nrow = length(x1)) %*% mass)[, 1]
+        g    <- continuous_prior_grid(prior, k)
+        grid <- grid_x_theta(x1, g$piv)
+        (matrix(probability_density_function(dist, grid$x, n1, grid$theta), nrow = length(x1)) %*% g$mass)[, 1]
     })
 
 
@@ -164,11 +174,9 @@ setMethod("predictive_pdf", signature("DataDistribution", "ContinuousPrior", "nu
 #' @export
 setMethod("predictive_cdf", signature("DataDistribution", "ContinuousPrior", "numeric"),
     function(dist, prior, x1, n1, k = 10*(prior@support[2] - prior@support[1]) + 1, ...) {
-        piv  <- seq(prior@support[1], prior@support[2], length.out = k)
-        mass <- sapply(piv, prior@pdf)
-        mass <- mass / sum(mass) # (renormalize!)
-        grid <- expand.grid(x1 = x1, piv = piv)
-        (matrix(cumulative_distribution_function(dist, grid$x1, n1, grid$piv), nrow = length(x1)) %*% mass)[, 1]
+        g    <- continuous_prior_grid(prior, k)
+        grid <- grid_x_theta(x1, g$piv)
+        (matrix(cumulative_distribution_function(dist, grid$x, n1, grid$theta), nrow = length(x1)) %*% g$mass)[, 1]
     })
 
 

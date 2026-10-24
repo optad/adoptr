@@ -29,6 +29,11 @@ Student <- function(two_armed = TRUE) {
 }
 
 
+# internal: degrees of freedom; vectorised in n (pmax instead of max, such that
+# a vector of sample sizes, e.g. from simulate(), is handled element-wise)
+student_df <- function(dist, n) pmax(1, dist@multiplier * (n - 1))
+
+
 #' @examples
 #' probability_density_function(Student(TRUE), 1, 40, 1.1)
 #'
@@ -36,7 +41,7 @@ Student <- function(two_armed = TRUE) {
 #' @export
 setMethod("probability_density_function", signature("Student", "numeric", "numeric", "numeric"),
           function(dist, x, n, theta, ...) {
-            return(stats::dt(x, df = max(1, dist@multiplier * (n - 1)), ncp = sqrt(n / dist@multiplier) * theta))
+            return(stats::dt(x, df = student_df(dist, n), ncp = sqrt(n / dist@multiplier) * theta))
           })
 
 
@@ -47,7 +52,7 @@ setMethod("probability_density_function", signature("Student", "numeric", "numer
 #' @export
 setMethod("cumulative_distribution_function", signature("Student", "numeric", "numeric", "numeric"),
           function(dist, x, n, theta, ...) {
-            return(stats::pt(x, df = max(1, dist@multiplier * (n - 1)), ncp = sqrt(n / dist@multiplier) * theta))
+            return(stats::pt(x, df = student_df(dist, n), ncp = sqrt(n / dist@multiplier) * theta))
           })
 
 
@@ -57,7 +62,7 @@ setMethod("cumulative_distribution_function", signature("Student", "numeric", "n
 #' @export
 setMethod("quantile", signature("Student"),
           function(x, probs, n, theta, ...) { # must be x to conform with generic
-            return(stats::qt(probs, df = max(1, x@multiplier * (n - 1)), ncp = sqrt(n / x@multiplier) * theta))
+            return(stats::qt(probs, df = student_df(x, n), ncp = sqrt(n / x@multiplier) * theta))
           })
 
 
@@ -72,7 +77,7 @@ setMethod("quantile", signature("Student"),
 setMethod("simulate", signature("Student", "numeric"),
           function(object, nsim, n, theta, seed = NULL, ...) {
             if (!is.null(seed)) set.seed(seed)
-            return(stats::rt(nsim, df = max(1, object@multiplier * (n - 1)), ncp = sqrt(n / object@multiplier) * theta))
+            return(stats::rt(nsim, df = student_df(object, n), ncp = sqrt(n / object@multiplier) * theta))
           })
 
 
